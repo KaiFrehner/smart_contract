@@ -1,12 +1,20 @@
-Names:
+# topic proposal
+
+
+## Names:
 - Kai Frehner 
+-
+-
+-
 
 
-Student-ID:
+## Student-ID:
+-
+-
+-
 - 
 
-
-topic proposal
+## proposal
 This study proposes to investigate the design and implementation of a parametric weather insurance product tailored to vacationers. Unlike traditional insurance, parametric insurance pays out a predetermined amount when objective, contractually defined conditions are met, eliminating the need for claims adjustment. The relevance of this product is underscored by increasing demand for flexible, transparent, and data-driven risk transfer solutions in the tourism sector.
 The research will focus on developing a robust definition of “bad weather” based on statistical deviations from seasonal norms. Specifically, adverse conditions will be defined as weather variables (e.g., temperature or precipitation) falling at least one to two standard deviations below (or above in case of rain) historical monthly averages. This approach allows for seasonally appropriate benchmarks and minimizes the risk of misaligned expectations between insurer and policyholder.
 To ensure accuracy and efficiency, the insurance contract will be implemented as a smart contract. Blockchain-based automation will facilitate immediate payouts once the predefined weather threshold is reached, while also ensuring transparency, immutability, and trust in contract execution.
