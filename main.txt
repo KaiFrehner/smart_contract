@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\graphicspath{{./visualizations/}}
+\setlength{\parindent}{0pt} % kein indent bei absätzen
+\setlength{\parskip}{\baselineskip} % abstand zwischen absätzen
+\linespread{0.95} % controls the tightness overall
+\usepackage{blindtext}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+\title{Semester Project: \\ Smart Contracts in Parametric Weather Insurance}
+\author{Giona Cavalli, Kai Frehner, Benjamin Gerber}
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\section{Background}
+\subsection{Smart Contracts}
+\subsection{Parametric Insurance}
+\section{Methodology and System Design}
+\subsection{Weather Data}
+\subsection{Smart Contract}
+\subsection{Design}
+\section{Implementation and Use Case}
+\section{Discussion and Limitations}
+\section{Conclusion and Outlook}
+
+
+
+\end{document}
