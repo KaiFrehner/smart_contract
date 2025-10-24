@@ -42,3 +42,104 @@ account based modell is more flexible and intuitive, but:
 - privacy concern: same adress for several transactions
 - while first transaction is being executed following transactions are stuck
 - possible conflicts between several transactions on same account from diffreent sources.
+
+## Transactions
+Transaction: A transaction is a message sent from an externally owned account (EOA).
+Transaction modify states: (can only be modified by transaction, and each transaction must modify a state.)
+- Ether balance
+- Contract Account's (CA) storage
+
+Contract Account (CA): only issues internal transactions / calls. must be triggered be an EOA initially
+
+Call: A call is executed locally (on the node). It is read-only, i.e.,
+does not lead to state changes. Not subject to network fees.
+
+Internal Transaction: part of another transaction and must
+be executed alongside the containing transaction.
+
+Internal Call: is part of a transaction and must be executed alongside the
+containing transaction. Subject to network fees.
+
+Etherium Transations: 
+always contain: 
+- Recipient Address: The recipient’s hexadecimal address.
+- Nonce: Transaction count from sender.
+- Signature: Consisting of the variables V, R and S.
+- Gas Limit: Maximum number of transaction execution steps.
+- Gas Price: Fee the sender is willing to pay per execution step.
+- (value: Ether valie in Wei, 10^18 Wei = 1 ETH)
+- (Data: Contract execution instructions)
+
+## Gas and Fees
+In order to fix the problem of infinit loops (or resource intensive scripts) ETH transaction costs is attributed to transactions. 
+Bitcoin uses limited scripting language to solve this problem. 
+
+- Addition: 3 gas uints
+- multiplication: 5 gas uints
+- store 256 bits: 20k gas units
+- gas limit: user sets this. maximum amount paid for transaction
+- gas price: price in muETH or gwei per unit of gas
+
+Minimum 21k gas für a ETH transaction
+
+ETH Gas Fees after EIP-1559
+- Base Fee: is burned by the network (takes ETH out of circulation). increased or decreased by 12.5% per Block. Set depending on demand for block space. 
+- Priority Fee (Tip): incentivies minor to include transaction in the block.
+- Max Fee: set by user = maximum willingness to pay
+- Refund: max(0, maxFee - (baseFee + maxpriority fee)) unused gas is returned.
+
+Base Fee adjustment: 
+only asdjusted if gas used <> target gas
+r_cur = r_pred * (1+1/8 * (s_pred - s_target)/s_target)
+r_pred: base fee of previous block
+s_pred: block size of previous block
+s_target: target block size
+
+BSP: 
+s_pred = 30 mio
+r_pred = 20 gwei
+s_target = 15 mio
+r_cur = 20 gwei * (1 + (1/8)* (30 mio - 15 mio)/ 15 mio) = 20 gwei *(1+1/8) 
+= 20 * 9 / 8 = 22.5 gwei
+
+## Smart Contracts and the EVM (Etherium Virtual Machine)
+EVM (Etherium Virtual Machine): 
+- runs on every node
+- processes transactions and state changes (deterministically)
+- Turing complete
+- State changes as part of consensus: everyone performs all computations
+
+Slow State Machine: EVM is 'world computer'. A slow network that executes exactly as specified and state changes can be tracked and verified by any network participant
+
+cons of EVM
+- slow
+- every node processes all transactions
+- Tradeoff: inclusion vs performance
+-- verfication (computation resources)
+-- Data exchange (network resources)
+- 10 - 20 transactions per second
+
+pros of EVM
+- permissionless
+- distributed -> robust
+- Trustless -> verifiable
+- irreversible
+
+EVM ideal for smart contracts!
+
+Native on-Chain Data (eg. ETH Transaction):
+- stored on-chain and fully secured by consensus protocoll
+- Native protocol token transactions and some endogeneous (token) contracts
+- On-chain validation
+Off-Chain Data(football scores or weather data):
+- No native on-chain representation
+- Data can be hashed
+- requires trustworthy data providers (oracle)
+Physical Off-Chain Reference (Shipment containers):
+- No native on-chain representation
+- Data cannot be hashed
+- Requires trustworthy data providers (oracles) as well as reliable cryptoanchors.
+
+# Smart Contract Programming
+## Develompent Workflow
+Development -> Compilation -> Deployment -> Testing
