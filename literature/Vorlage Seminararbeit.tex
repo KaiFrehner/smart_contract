@@ -1,0 +1,140 @@
+\documentclass[a4paper,titlepage]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{a4paper,left=35mm,right=35mm,top=4cm,bottom=4cm}
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{multirow}
+\numberwithin{equation}{section} %Nummeriert mathematische Umgebungen nach sections durch
+\usepackage[nodisplayskipstretch]{setspace} %lässt Abstand zwischen align-Umgebungen und Text auf 1.0
+\setstretch{1.5}% ergibt 1,5-fachen Zeilenabstand
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{titlepage}
+
+\begin{center}
+	\includegraphics[scale=1.5]{Logo_Basel}
+\end{center}
+\vspace{2.5cm}
+\begin{center}                     
+        {\Large\scshape Seminararbeit}\\*[5mm]
+				{\Large\scshape M.Sc.-Studiengang "`Actuarial Science"'}\\*[5mm]
+        {\bf\Large\scshape Titel der Seminararbeit}\\*[12mm]         
+\end{center}  
+\vspace{4,5cm}
+\begin{tabbing}
+       eingereicht von:		\hspace{6.5cm}\=			betreut von:\\*[2mm]
+       \bf{Name des Autors} 								\> \bf{Name des Betreuers}\\*[2mm]		
+        Matrikel--Nr.:  \\*[2mm]
+        \textbf{Straße \& Hausnummer}										\> Abgabedatum, Ort: \\*[2mm]
+        \textbf{PLZ \& Ort}		   							\> \textbf{XX.XX.XXXX, Ort}   \\*[2mm]
+        Telefon: \\*[2mm]
+        Email: \\*[2mm]
+\end{tabbing}
+\end{titlepage}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\thispagestyle{empty}
+\pagenumbering{Roman}
+\setcounter{page}{2}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\newpage
+
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}
+\listoffigures
+\newpage
+
+\addcontentsline{toc}{section}{Tabellenverzeichnis}
+\listoftables
+\newpage
+
+\section*{Abkürzungsverzeichnis}
+\addcontentsline{toc}{section}{Abkürzungsverzeichnis}
+\newpage
+
+\section*{Symbolverzeichnis}
+\addcontentsline{toc}{section}{Symbolverzeichnis}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\section{Einleitung}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Erstes Kapitel des Hauptteils}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Erster Abschnitt}
+
+\subsection{Zweiter Abschnitt}
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Zweites Kapitel des Hauptteils}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Erster Abschnitt}
+ 
+\subsection{Zweiter Abschnitt}
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Schlussbetrachtung}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Anhang}
+\addcontentsline{toc}{section}{Anhang}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begingroup
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+\renewcommand*\refname{Literaturverzeichnis}
+
+\begin{thebibliography}{----}
+
+\bibitem{Mack1993}
+\textsc{Mack}, T. (1993): {\it Distribution-free calculation of the standard error of chain ladder reserve estimates}. ASTIN Bulletin 23/2, S. 171-183.
+
+\bibitem{Wuethrich-et-al2010}
+\textsc{Wüthrich}, M. V., \textsc{Bühlmann}, H. \& \textsc{Furrer}, H. (2010): {\it Market-Consistent Actuarial Valuation}. Springer Verlag, Berlin. 2. Auflage.
+\end{thebibliography}
+\endgroup
+\end{document}
