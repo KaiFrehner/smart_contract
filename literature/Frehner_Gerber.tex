@@ -1,6 +1,7 @@
 \documentclass[a4paper,titlepage]{article}
+\usepackage{float}
 \usepackage[utf8]{inputenc}
-\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 \geometry{a4paper,left=35mm,right=35mm,top=4cm,bottom=4cm}
@@ -9,7 +10,7 @@
 \usepackage{multirow}
 \numberwithin{equation}{section} %Nummeriert mathematische Umgebungen nach sections durch
 \usepackage[nodisplayskipstretch]{setspace} %lässt Abstand zwischen align-Umgebungen und Text auf 1.0
-\setstretch{1.5}% ergibt 1,5-fachen Zeilenabstand
+\setstretch{1}% ergibt 1,5-fachen Zeilenabstand
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,19 +49,21 @@
 \tableofcontents
 \newpage
 
+\section*{List of figures}
 \addcontentsline{toc}{section}{List of figures}
 \listoffigures
 \newpage
 
+\section*{List of tables}
 \addcontentsline{toc}{section}{List of tables}
 \listoftables
 \newpage
 
-\section*{Abkürzungsverzeichnis}
+\section*{List of abbreviations}
 \addcontentsline{toc}{section}{List of Abbreviations}
 \newpage
 
-\section*{Symbolverzeichnis}
+\section*{List of Symbols}
 \addcontentsline{toc}{section}{List of Symbols}
 \newpage
 
@@ -70,17 +73,47 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 \section{Introduction}
+
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{First chapter of the main part}
+\section{Main part}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{First Section}
+\subsection{What is parametric insurance?}
+Thinking about nonlife insurance the intuitive idea is that a predefined risk is covered by an insurance company, which, in occurrence of a loss or damage, would pay out a certain amount to the claimant. This amount would have a direct relation to the insured loss. In the world of nonlife insurance solutions there are far more classes of contracts than this classical kind of indemnity insurance. The figure below is showing the different kinds of indemnity and non-indemnity insurance contracts:
+
+\begin{figure}[h] % [h] = "here", direkt an dieser Stelle
+    \centering
+    \includegraphics[width=0.5\textwidth]{nonlifecontracts} % Dateiname des Bildes
+    \caption{Classification of nonlife contracts \cite{LinKwon}}
+    \label{fig:beispiel}
+\end{figure}
+In the following we will refer to "Pure Parametric Contracts" using the term "Parametric Insurance". This is the class of contracts, were a predefined amount is paid to the insured, if a specific trigger is hit, regardless of the loss amount. Examples for such triggers could be the magnitude of an earthquake, wind speed or the delay of a plane. The following table highlights differences between traditional indemnity insurance and parametric solutions:
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{|p{2.25cm}|p{5cm}|p{5cm}|}
+        \hline
+        \toprule
+         & \textbf{Traditional insurance }& \textbf{Parametric insurance} \\
+        \midrule \hline\hline
+        Recovery & Reimbursement of ajusted loss & Pre-agreed payment structure based on a event parameter (often binary) \\\hline
+        Trigger & Payment triggered by actual loss or damage & Payment triggered by an event occurrence exceeding the parametric threshold \\\hline
+        Loss assement and payment & Complex and based on loss adjuster assesment & Transparent, predictable, based on a parameter, quick settlement \\\hline
+        Structure & Standard product and contract wordings & Tailored product with high structuring flexibility \\
+        \bottomrule
+        \hline
+    \end{tabular}
+    \caption{Traditional versus parametric insurance  \cite{ParamGuide}}
+    \label{tab:example}
+\end{table}
+
+Those differences in the structure mentioned in Table 1 makes parametric solutions attractive for different Lines of Businesses such as Agriculture, Nature Catastrophe or Travel Insurance \cite{ParamGuide}. In recent years it is one of the fastest growing areas in the world of insurance solutions expecting to triple in premium income within the 2020s to almost 30 billion USD \cite{SwissReParamIns}. Still a niche product compared to the seven trillion USD insurance premium income worldwide \cite{AllianzReport}. 
 
 \subsection{Second Section}
 
@@ -130,8 +163,25 @@
 \bibitem{Mack1993}
 \textsc{Mack}, T. (1993): {\it Distribution-free calculation of the standard error of chain ladder reserve estimates}. ASTIN Bulletin 23/2, S. 171-183.
 
-\bibitem{Wuethrich-et-al2010}
-\textsc{Wüthrich}, M. V., \textsc{Bühlmann}, H. \& \textsc{Furrer}, H. (2010): {\it Market-Consistent Actuarial Valuation}. Springer Verlag, Berlin. 2. Auflage.
+\bibitem{LinKwon}
+\textsc{Lin}, X., \textsc{Kwon}, WJ. (2020): {\it Application of parametric insurance in principle‐compliant and innovative ways}. Risk Manag Insur Rev 23, p. 121-150.
+
+
+\bibitem{ParamGuide}
+Swiss Re Corporate Solutions,
+\textit{Comprehensive guide to Parametric Insurance},
+\url{https://corporatesolutions.swissre.com/dam/jcr:0cd24f12-ebfb-425a-ab42-0187c241bf4a/2023-01-corso-guide-of-parametric-insurance.pdf}. Accessed, November 8, 2025.
+
+\bibitem{SwissReParamIns}
+Swiss Re Insights,
+\textit{Parametric insurance – a long history, a bright future},
+\url{https://corporatesolutions.swissre.com/insights/knowledge/evolution-of-parametric-insurance.html}. Accessed, November 8, 2025.
+
+\bibitem{AllianzReport}
+Allianz,
+\textit{Allianz Global Insurance Report 2025: Rising demand for protection},
+\url{https://www.allianz.com/en/economic_research/insights/publications/specials_fmo/250527-global-insurance-report.html}. Accessed, November 8, 2025.
+
 \end{thebibliography}
 \endgroup
 \end{document}
