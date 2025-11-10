@@ -5,7 +5,7 @@ Peer-to-Peer Network:
 - Censorship-resistant
 - No special privileges
 ## Transaction legitimacy: Ensure transaction authenticity and integrity using cryptography
-private key encripts outgoing messages, which can be decrypted with the public key
+private key encrypts outgoing messages, which can be decrypted with the public key
 ## Transaction consensus: deciding which legitimate transaction is valid.
 The network agrees on the current state of the ledger. Problem when several transactions happen at the same time: Edith:
 - “I transfer all of my Ether to Lucas.”
@@ -13,13 +13,13 @@ The network agrees on the current state of the ledger. Problem when several tran
 All transaction types modify the data structure. There must be a consensus regarding
 the validity and order of transactions.
 consensus types: 
-- Proof of Authotiry: a centralized party decides
+- Proof of Authority: a centralised party decides
 - Proof of Work: validation in proportion to computational resources
 - Proof of Stake: validation in proportion to collateral
 
 # Chapter 2: Block Chain Basics
-## Acount based Model
-Etherium uses account based model. each account has a 20 byte address in hexidecimal encoding
+## Account based Model
+Etherium uses account based model. each account has a 20 byte address in hexadecimal encoding
 Externally owned accounts (controlled by a private key): 
 - adress
 - balance
@@ -38,10 +38,10 @@ create a contrace:
 - Transaction confirmation = contract deployment
 - New contract account address = SHA3.256(address sender, nonce)
 
-account based modell is more flexible and intuitive, but: 
-- privacy concern: same adress for several transactions
+account based model is more flexible and intuitive, but: 
+- privacy concern: same address for several transactions
 - while first transaction is being executed following transactions are stuck
-- possible conflicts between several transactions on same account from diffreent sources.
+- possible conflicts between several transactions on same account from different sources.
 
 ## Transactions
 Transaction: A transaction is a message sent from an externally owned account (EOA).
@@ -143,3 +143,9 @@ Physical Off-Chain Reference (Shipment containers):
 # Smart Contract Programming
 ## Develompent Workflow
 Development -> Compilation -> Deployment -> Testing
+
+
+## Solidity Basics
+
+
+## functions
