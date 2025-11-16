@@ -1,3 +1,5 @@
+library(httr)
+library(jsonlite)
 library(dplyr)
 library(lubridate)
 library(fitdistrplus) 
@@ -94,7 +96,11 @@ summary(fit_pois)
 hist(x, freq=F)
 lines(seq(0,5,0.1), dpois(seq(0,5,0.1), lambda = fit_pois$estimate))
 
-fit_nbin <- fitdistr(data=x, distr="normal")
+fit_exp <- fitdistr(data=c(0.1,0.1,0.1,0.1,0.1,rep(0.4,7)), distr="normal")
+
+(missing(x) || length(x) == 0L || mode(x) != "numeric")
+  
+str(x[0])
 summary(fit_nbin)
 plot(fit_nbin)
 descdist(x)

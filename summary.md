@@ -148,4 +148,22 @@ Development -> Compilation -> Deployment -> Testing
 ## Solidity Basics
 
 
-## functions
+## Functions and Modifiers
+function < functionName >( < parameters >) < modifiers >
+    returns ( < return variables >) {
+    < function body >
+}
+parameters with _local
+
+modifiers:
+- Accesibility: which account can access the function of variable.
+- State Permission: which function can read, write or modify a state 
+-- pure: no read, no write
+-- view: yes read, no write
+-- <omitted>: yes read, yes write
+- special and custom modifer: 
+-- payable: allows a function to receive ETH as part of a transaction
+-- virtual & override: used for inheritance
+-- constant: no changes allowed. 
+-- imutable: no changes allowed, can be set during deployment
+
