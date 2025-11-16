@@ -49,24 +49,6 @@
 \tableofcontents
 \newpage
 
-\section*{List of figures}
-\addcontentsline{toc}{section}{List of figures}
-\listoffigures
-\newpage
-
-\section*{List of tables}
-\addcontentsline{toc}{section}{List of tables}
-\listoftables
-\newpage
-
-\section*{List of abbreviations}
-\addcontentsline{toc}{section}{List of Abbreviations}
-\newpage
-
-\section*{List of Symbols}
-\addcontentsline{toc}{section}{List of Symbols}
-\newpage
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -115,9 +97,50 @@ In the following we will refer to "Pure Parametric Contracts" using the term "Pa
 
 Those differences in the structure mentioned in Table 1 makes parametric solutions attractive for different Lines of Businesses such as Agriculture, Nature Catastrophe or Travel Insurance \cite{ParamGuide}. In recent years it is one of the fastest growing areas in the world of insurance solutions expecting to triple in premium income within the 2020s to almost 30 billion USD \cite{SwissReParamIns}. Still a niche product compared to the seven trillion USD insurance premium income worldwide \cite{AllianzReport}. 
 
-\subsection{Second Section}
+\subsection{Baloise and Wetterheld - A parametric travel insurance}
+
+In 2023  Swiss insurer Baloise achieved second place at the Swiss Insurance Innovation award prize for innovation for its multi-parametric travel insurance solution "Parasurance". With Parasurance customers can decide whether they cover for flight delay, luggage delay, bad weather or a combination of those on their trip. Further, a motor third party liability insurance can be added to the coverage. The parametric bad weather insurance is a collaboration with the German start-up Wetterheld. The trigger in this parametric insurance, is hit, if the precipitation at a fixed destination, exceeds a certain amount (in mm) within a time period. While Baloise provides the product, Wetterheld is responsible for the tracking of the parameters. The scope of the insurance provider limits as follows:
+
+\paragraph*{Time restriction}
+To prevent moral hazard, parametric weather insurance cover cannot be bought later than 14 days before the trip starts. The accuracy of weather forecasts has been shown to decrease exponentially, with forecasts beyond two weeks being no more reliable than random guessing. The available duration of a trip covered by bad-weather insurance is 2-92 days.
+
+\paragraph*{Geographical scope}
+The insured has to provide GPS coordinates of his trip destination. Wetterheld then uses publicly accessible weather data from meteostat to verify whether the policyholder is entitled to compensation \cite{meteostat}, checking the precipitation data at the reported coordinates. Change of place due to travelling is not possible in the bad weather insurance. Only trips within Europe can be insured by Wetterheld.
+
+\paragraph*{Definition of bad weather}
+The trigger for this parametric insurance is hit, if the precipitation (rainfall, snow, hail etc.) exceeds 2.9mm within one day only considering the time 10 a.m. until 6 p.m.A rain amount of 2.9mm is approximately equivalent to 90 minutes of light rain or 10-15 min of heavy rain \cite{dwd}. 
+
+\paragraph*{Deductible days}
+The bad weather coverage also considers the destination of a trip in terms of the amount of precipitation expected in this area. The probability for a wet trip is not the same when travelling to the United Kingdom as for travelling to Andalusia. Therefore Wetterheld introduced what can be understood as deductible days. For example for a seven days trip to Cardiff the first three days of may not be covered, while on the Sevilla trip only the first one isn't covered due to different expectations. Furthermore, the number of days with significant precipitation varies considerably throughout the calendar year.
+
+\paragraph*{Pricing}
+Calculating a reasonable risk premium is the most crucial part and remains confidential. No information about the modelling and pricing was available, the only transparent part of a parametric insurance is the pay-out trigger.
+
+\subsection{Implementation of a parametric weather insurance}
+For the project in "Smart Contracts and Decentralized Finance" the product presented above could only be implemented partially. Many aspects were simplified and some were out of the scope of our project. 
+\paragraph*{Time restriction}
+(Via Smart Contract in Sepolia?)
+
+\paragraph*{Geographical scope}
+In this implementation the insured would provide a start and an end date of his trip as well as gps coordinates of his location. The location is then used to get an estimate for the number of days with precipitation larger than 2.9mm (details see below "Deductible days") using R. The geographical scope of the program is Europe (incl. Iceland, Scandinavia and Turkey). The 
+
+\paragraph*{Definition of bad weather}
+(Kai) The trigger is set to 2.9mm precipitation within a day in the Smart Contract script.
+
+\paragraph*{Deductible days}
+The calculation which lies behind the number of deductible days from Wetterheld is not transparently available for customers. For this project we had our own approach using five risk categories (A-E) to find the number of deductible days for a certain location. Copernicus Climate Change services is a program by the European Comission that provides historical weather data for drought, flood, temperature, precipitation etc. We used historical precipitation data (1983-2023) which is obtained through satellite imagery for each 0.5° x 0.5° grid cell. Each of the five risk category represents a 20-percent quantile of the annual precipitation amounts. For exmaple if the average annual precipitation in our location is in the 35th percentile of our dataset, its risk category would be "B". The number of deductibles is then determined by the formula:
+\[
+D_{\text{ded}} = \text{int}\big(D_{\text{tot}} \cdot \mu_X\big)
+\]
+
+where: int\text{ = rounding function}, D_{\text{ded}} \text{ = Deductible Days}, D_{\text{tot}} \text{ = Duration of the trip}, \\
+\mu_X \text{ = risk factor, with } \mu_A = 0.1, \mu_B = 0.2, \dots, \mu_E = 0.5
 
 
+\paragraph*{Pricing}
+(Kai)
+
+\subsection{Contract and incentive structure}
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -181,6 +204,16 @@ Swiss Re Insights,
 Allianz,
 \textit{Allianz Global Insurance Report 2025: Rising demand for protection},
 \url{https://www.allianz.com/en/economic_research/insights/publications/specials_fmo/250527-global-insurance-report.html}. Accessed, November 8, 2025.
+
+\bibitem{meteostat}
+Meteostat,
+\textit{Meteostat webiste},
+\url{https://meteostat.net/de/}. Accessed, November 10, 2025.
+
+\bibitem{dwd}
+Deutscher Wetterdienst,
+\textit{Wetterlexikon: Niederschlagsintensität},
+\url{https://www.dwd.de/DE/service/lexikon/Functions/glossar.html?lv2=101812&lv3=101906}. Accessed, November 16, 2025.
 
 \end{thebibliography}
 \endgroup
