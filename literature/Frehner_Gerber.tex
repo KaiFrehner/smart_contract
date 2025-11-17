@@ -11,6 +11,10 @@
 \numberwithin{equation}{section} %Nummeriert mathematische Umgebungen nach sections durch
 \usepackage[nodisplayskipstretch]{setspace} %lässt Abstand zwischen align-Umgebungen und Text auf 1.0
 \setstretch{1}% ergibt 1,5-fachen Zeilenabstand
+\setlength{\parindent}{0pt} % kein indent bei absätzen
+\setlength{\parskip}{\baselineskip} % abstand zwischen absätzen
+\linespread{0.95} % controls the tightness overall
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -127,6 +131,14 @@ In this implementation the insured would provide a start and an end date of his 
 \paragraph*{Definition of bad weather}
 (Kai) The trigger is set to 2.9mm precipitation within a day in the Smart Contract script.
 
+\begin{figure}[h] % [h] = "here", direkt an dieser Stelle
+    \centering
+    \includegraphics[width=0.5\textwidth]{weather_2025_Sep} % Dateiname des Bildes
+    \caption{example of a triggered parametric weather insurance given that travel occurred between days 252 and 260 with deductible days of less than 4. The data is the of sum of precipitation between the hours of 8 AM and 10 PM per day. The precipitation data is from Berlin in September 2025.}
+    \label{fig:bsp_trigger}
+\end{figure}
+
+
 \paragraph*{Deductible days}
 The calculation which lies behind the number of deductible days from Wetterheld is not transparently available for customers. For this project we had our own approach using five risk categories (A-E) to find the number of deductible days for a certain location. Copernicus Climate Change services is a program by the European Comission that provides historical weather data for drought, flood, temperature, precipitation etc. We used historical precipitation data (1983-2023) which is obtained through satellite imagery for each 0.5° x 0.5° grid cell. Each of the five risk category represents a 20-percent quantile of the annual precipitation amounts. For exmaple if the average annual precipitation in our location is in the 35th percentile of our dataset, its risk category would be "B". The number of deductibles is then determined by the formula:
 \[
@@ -138,9 +150,20 @@ where: int\text{ = rounding function}, D_{\text{ded}} \text{ = Deductible Days},
 
 
 \paragraph*{Pricing}
+simple idea, as pricing is out of scope for this project.
+$premium = coverage * (duration - thresholdForRegion) * 1/10 * region * 11/10;$
 (Kai)
 
-\subsection{Contract and incentive structure}
+\subsection{Specifics of the Smart Contract}
+
+\begin{figure}[h] % [h] = "here", direkt an dieser Stelle
+    \centering
+    \includegraphics[width=0.7\textwidth]{flowchart_2} % Dateiname des Bildes
+    \caption{flowchart of the triggerfunction}
+    \label{fig:flowchart}
+\end{figure}
+
+
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
