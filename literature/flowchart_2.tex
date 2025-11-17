@@ -1,6 +1,7 @@
-\documentclass[a4paper,10pt]{article}
-\usepackage{geometry}
-\geometry{margin=1cm}
+%\documentclass[a4paper,10pt]{article}
+\documentclass{standalone}
+
+
 \setlength{\parindent}{0pt} % kein indent bei absätzen
 \setlength{\parskip}{\baselineskip} % abstand zwischen absätzen
 \linespread{0.95} % controls the tightness overall
@@ -49,12 +50,13 @@
 \node (balance) [process, below of=start] {Read contract balance};
 \node (loop) [process, below of=balance] {For each policy};
 
-\node (before) [decision, below of=loop] {Is policy active?};
-\node (nostart) [process, below=2.39635cm of before] {Do nothing};
+\node (before) [decision, below of=loop] {Now \textless{} startTime};
+\node (notactive) [process, below of= before] {Policy is not yet active};
+\node (nostart) [process, below of = notactive] {Do nothing};
 
 \node (active) [decision, right=2cm of before] {startTime \textless{} Now \textless{} endTime?};
-\node (rain) [decision, below= 1cm of active] {\_current\_entry \textgreater{}  rainfallAmt?};
-\node (increment) [process, below=1cm of rain] {Increment daysOverThreshold \\ Record affected policy};
+\node (rain) [decision, right = 2cm of nostart ] {\_current\_entry \textgreater{}  rainfallAmt?};
+\node (increment) [process, below =2.5cm of rain] {Increment daysOverThreshold \\ Record affected policy};
 
 \node (expired) [decision, right=3cm of active] {Now \textgreater{} endTime?};
 \node (endmark) [process, below of=expired] {Mark as ended};
@@ -65,7 +67,7 @@
 \node (send) [process, below of=funds] {Attempt payment};
 \node (emitcov1) [process, below of=send] {Emit CoverageTriggered};
 
-\node (emitcov2) [process, left =-0.5cm of qualify, yshift=-4cm] {Emit CoverageTriggered \\ (no payout)};
+\node (emitcov2) [process, left = 0.5cm of send] {Emit CoverageTriggered \\ (no payout)};
 
 \node (emitweather) [process, below of=increment, yshift=-2cm] {Emit addWeatherData event \\ (if affectedPolicies $\neq$ empty)};
 
@@ -78,7 +80,8 @@
 \draw [arrow] (balance) -- (loop);
 \draw [arrow] (loop) -- (before);
 
-\draw [arrow] (before) -- node[right]{No} (nostart);
+\draw [arrow] (before) -- node[right]{No} (notactive);
+\draw [arrow] (notactive) -- (nostart);
 \draw [arrow] (nostart.south) |- (end);
 
 \draw [arrow] (before.east) -- ++(1,0) -- (active.west) node[midway,above]{Yes};
@@ -96,7 +99,7 @@
 \draw [arrow] (endmark) -- (qualify);
 
 \draw [arrow] (qualify) -- node[right]{Yes} (payoutcalc);
-\draw [arrow] (qualify.west) -- ++(0,0) -| (emitcov2.north) node[midway,above]{No};
+\draw [arrow] (funds.west) -- ++(0,0) -| (emitcov2.north) node[midway,above]{No};
 
 %\draw [arrow] (qualify.west) -- ++(-1,0) |- node[right]{No} (emitcov2);
 
