@@ -16,6 +16,7 @@
 \linespread{0.95} % controls the tightness overall
 \usepackage{hyperref }
 \usepackage{nameref}
+\usepackage{booktabs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,7 +138,8 @@ Smart contracts are frequently used to automate processes in decentralized appli
 For the project in "Smart Contracts and Decentralised Finance" the product presented was partially implemented in a smart contract on the Sepolia-ETH test net. The code was programmed using the programming language Solidity and the development environment used was the REMIX browser IDE. Many aspects were simplified and some were out of the scope of our project. When a topic was considered out of scope, the theoretical solution is outlines as well as the simplified implemented version are specified.
 
 \paragraph*{Time restriction}
-The time restriction in the implemented smart contract is the same as the time restriction used in the Baloise insurance. The starting and end times are checked using the require function in Solidity. For testing purposes the minimum wait time of 14 days has been removed.
+The time restrictions implemented in the smart contract mirror those used in the Baloise insurance product. The start and end dates of a policy are validated using Solidity's \texttt{require} statements. For testing purposes, the minimum waiting period of 14 days has been removed.
+
 
 \paragraph*{Geographical scope}
 In this implementation the insured would provide a start and an end date of his trip as well as gps coordinates of his location. The location is then used to get an estimate for the number of days with precipitation larger than 2.9mm (details see below "Deductible days") using R. The geographical scope of the program is Europe (incl. Iceland, Scandinavia and Turkey). The % Kommentar: Hier ist der Satz nicht fertig. 
@@ -150,60 +152,71 @@ Bad weather is defined by 2.9mm precipitation within a time period between 8 AM 
 \paragraph*{Deductible days}
 The calculation which lies behind the number of deductible days from Wetterheld is not transparently available for customers. For this project we had our own approach using five risk categories (A-E) to find the number of deductible days for a certain location. Copernicus Climate Change services is a program by the European Comission that provides historical weather data for drought, flood, temperature, precipitation etc. We used historical precipitation data (1983-2023) which is obtained through satellite imagery for each 0.5° x 0.5° grid cell. Each of the five risk category represents a 20-percent quantile of the annual precipitation amounts. For exmaple if the average annual precipitation in our location is in the 35th percentile of our dataset, its risk category would be "B". The number of deductibles is then determined by the formula:
 \[
-D_{\text{ded}} = \text{int}\big(D_{\text{tot}} \cdot \mu_X\big)
+D_{\text{ded}} =  \operatorname{round}\!\big(D_{\text{tot}} \cdot \mu_X\big)
 \]
 
-where: int\text{ = rounding function}, D_{\text{ded}} \text{ = Deductible Days}, D_{\text{tot}} \text{ = Duration of the trip}, \\
-\mu_X \text{ = risk factor, with } \mu_A = 0.1, \mu_B = 0.2, \dots, \mu_E = 0.5
+where: $D_{\text{ded}} \text{ = Deductible Days}, D_{\text{tot}} \text{ = Duration of the trip}, 
+\mu_X \text{ = risk factor, with } \mu_A = 0.1, \mu_B = 0.2, \dots, \mu_E = 0.5$
 
 
 \paragraph*{Pricing}
-Due to the secrecy around the pricing of the Baloise product, the premium calculation is considered out of scope for this project. In order to test the smart contract a simplified and rudimentary formula is used to obtain a premium dependent on the \textbf{duration} of insured trip, the amount of  \textbf{coverage}, the amount of \textbf{deductible days} and a rudimentary estimation of the \textbf{likelihood of rain in the insured area}. Additionally, a \textbf{safety margin}  $\Phi = \frac{11}{10}$ is added. 
-
+Due to the proprietary nature of the Baloise product, the exact pricing methodology is not publicly disclosed and is therefore considered out of scope for this project. For testing purposes, a simplified and deliberately rudimentary premium formula is employed. This approximation derives the premium from the \textbf{duration} of the insured trip, the level of \textbf{coverage}, the number of \textbf{deductible days}, and a coarse estimate of the \textbf{likelihood of rain in the insured region}. In addition, a \textbf{safety margin} of $\Phi = \tfrac{11}{10}$ is included to account for uncertainty.
 
 \[
-\text{premium} = \text{coverage} \ (\text{duration} - \text{thresholdForRegion}) \   \mu_X \  \Phi
+\text{premium}
+= \text{coverage} \times (\text{duration} - \text{thresholdForRegion}) \times \mu_X \times \Phi
 \]
 
+
 \paragraph*{Example Berlin in September 2025}
+In order to illustrate a parametric weather insurance, we assume a trip to Berlin between 9~September and 17~September~2025 (days 252--260 in Figure~\ref{fig:bsp_trigger}). During this period, precipitation exceeds the threshold of 2.9\,mm on four days. Berlin is assigned to risk category ``B''. Therefore, the number of deductible days is
+\[
+D_{\text{ded}} = \operatorname{round}\!\big(8 \cdot 0.2\big) = 2.
+\]
+Consequently, the policy would have triggered a payout of
+\[
+2 \times \text{coverage}.
+\]
 
 \begin{figure}[h] % [h] = "here", direkt an dieser Stelle
     \centering
     \includegraphics[width=0.5\textwidth]{weather_2025_Sep} % Dateiname des Bildes
-    \caption{example of a triggered parametric weather insurance given that travel occurred between days 252 and 260 with deductible days of less than 4. The data is the of sum of precipitation between the hours of 8 AM and 6 PM per day. The precipitation data is from Berlin in September 2025.}
+    \caption{example of a triggered parametric weather insurance}
     \label{fig:bsp_trigger}
 \end{figure}
-
-
 \newpage
 \subsection{Specifics of the Smart Contract}
-This section describes the implementation of the parametric weather insurance using a smart contract. 
-Some of the features outlined above are simplified, either because they are out of scope for this project or because they proved impractical for testing purposes. 
 
-The Basic structure of the smart contract is, that the insurer issues you the contract, and the insured can buy a policy on the smart contract. The information of the policies (i.e. policy holder, region traveled to, amount of deductible days, threshold for bad weather (2.9mm)) is stored within the smart contract. The aggregated weather data for the observed time slot is imported once daily and triggers the function to check with policies are triggered. This function is outlined more closely below.
+This section describes the implementation of the parametric weather insurance using a smart contract. Some features outlined above are simplified, either because they fall outside the scope of this project or because they proved impractical for testing purposes.
 
-\paragraph*{Input Checks} 
-As the contract requires user interaction to set up a policy, the inputs need to be checked. This is primarily done with the \texttt{require} function in solidity. This way it is assured that user input is usable and that the premium amount is paid. 
+The basic structure of the smart contract is that the insurer deploys the contract, and users can purchase policies directly on-chain. Policy information (i.e., policyholder, region of travel, number of deductible days, and the threshold for bad weather (2.9\,mm)) is stored within the contract. Aggregated weather data for the relevant time period is imported once daily, which triggers the function that checks which policies are affected. This function is described in more detail below.
+
+\paragraph*{Input Checks}
+Because the contract requires user interaction when setting up a policy, all inputs undergo validation. This is primarily achieved using Solidity's \texttt{require} statements, which ensure that user-provided data is valid and that the premium payment meets the required amount.
 
 \paragraph*{Events}
-For key events such as state changes in the smart contract events are triggered. These events are then stored in the logs of the smart contract. In this smart contract events are triggered when a new policy is set up, when new weather information is published to the smart contract and which policies are affected by the new weather data point. Finally it is logged when a policy ends and a payment is made.
+Key state changes in the smart contract are recorded using events. These events are written to the transaction logs, providing an auditable record of contract activity. In this implementation, events are emitted when a new policy is created, when new weather data is imported, and when policies are affected by an incoming weather data point. Additionally, the contract emits an event when a policy expires and a payout is executed.
 
 \paragraph*{Data Import}
-In order to receive external data into the smart contract an oracle is used. A blockchain oracle is an external service that supplies off-chain data—such as weather measurements—to a smart contract, enabling it to react to real-world events that the blockchain cannot observe natively. As noted by Antonopoulos and Wood (2018), oracles are essential for connecting deterministic on-chain logic with unpredictable off-chain information.
-In this implementation the weather data is 
+To supply the contract with external information, an oracle mechanism is used. A blockchain oracle is an external service that delivers off-chain data—such as weather measurements—to a smart contract, enabling it to react to real-world events that the blockchain cannot observe natively. As noted by Antonopoulos and Wood (2018), oracles are essential for linking deterministic on-chain logic with unpredictable off-chain inputs. In this implementation, weather data is imported manually through a function call, which enables rapid testing by allowing new data points to be added within seconds rather than waiting for real-world observations.
 
-In a final implementation the daily aggregated 
+\paragraph*{Outline of the \texttt{trigger} Function} \label{sec:trigger}
+The core logic of the parametric insurance mechanism is implemented in the \texttt{trigger} function, which is executed whenever a new weather data point is uploaded. Each time the function runs, it iterates through all active policies and evaluates their status (active, not yet active, or expired). It then determines whether the new data point qualifies as a bad-weather day for the relevant region. If so, the policy is updated accordingly, and the appropriate events are emitted.
 
-\paragraph*{Outline of Trigger Function} \label{sec:trigger}
+Once a policy has expired, the function checks whether the number of bad-weather days exceeds the deductible. If the threshold is met, the payout is computed as
+\[
+(\text{bad-weather days} - \text{deductible days}) \cdot \text{coverage}.
+\]
+The contract’s balance is verified to ensure sufficient funds for the payout. If the payment is successfully processed, the expired policy is removed from the contract state, while all associated event logs remain stored on the blockchain.
 
-\begin{figure}[h] % [h] = "here", direkt an dieser Stelle
+Figure~\ref{fig:flowchart} provides a visual representation of the \texttt{trigger} function.
+
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{flowchart_2} % Dateiname des Bildes
-    \caption{flowchart of the triggerfunction}
+    \includegraphics[width=0.6\textwidth]{flowchart_2}
+    \caption{Flowchart of the \texttt{trigger} function}
     \label{fig:flowchart}
 \end{figure}
-
-
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
