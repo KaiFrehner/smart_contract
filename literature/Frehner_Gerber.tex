@@ -26,7 +26,6 @@
 \end{center}
 \vspace{2.5cm}
 \begin{center}                     
-        {\Large\scshape Project description}\\*[5mm]
 				{\Large\scshape Smart Contracts and Decentralized Finance}\\*[5mm]
         {\bf\Large\scshape Parametric Weather Insurance}\\*[12mm]         
 \end{center}  
@@ -34,7 +33,7 @@
 \begin{tabbing}
         submitted by:		\hspace{6.5cm}\=			supervised by:\\*[2mm]
        \bf{Kai Frehner, Benjamin Gerber} 								\> \bf{Prof. Dr. Fabian Schär}\\*[2mm]		
-        Matrikel--Nr.:  \\*[2mm]										\> Place, Date: \\*[2mm]		   							\> \textbf{Basel, 21.11.2025}   \\*[2mm]
+        Matrikel--Nr.:  20-647-970, 21-550-579\\*[2mm]										\> Place, Date: \\*[2mm]		   							\> \textbf{Basel, 21.11.2025}   \\*[2mm]
 \end{tabbing}
 \end{titlepage}
 \newpage
@@ -59,6 +58,7 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 \section{Introduction}
+% Komentar: wieso macht man einen parametrische Wetterversicherung in einem Smart Contract?
 
 \newpage
 
@@ -66,11 +66,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Main part}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{What is parametric insurance?}
+\section{Parametric Insurance}
 Thinking about nonlife insurance the intuitive idea is that a predefined risk is covered by an insurance company, which, in occurrence of a loss or damage, would pay out a certain amount to the claimant. This amount would have a direct relation to the insured loss. In the world of nonlife insurance solutions there are far more classes of contracts than this classical kind of indemnity insurance. The figure below is showing the different kinds of indemnity and non-indemnity insurance contracts:
 
 \begin{figure}[h] % [h] = "here", direkt an dieser Stelle
@@ -104,6 +101,7 @@ Those differences in the structure mentioned in Table 1 makes parametric solutio
 \subsection{Baloise and Wetterheld - A parametric travel insurance}
 
 In 2023  Swiss insurer Baloise achieved second place at the Swiss Insurance Innovation award prize for innovation for its multi-parametric travel insurance solution "Parasurance". With Parasurance customers can decide whether they cover for flight delay, luggage delay, bad weather or a combination of those on their trip. Further, a motor third party liability insurance can be added to the coverage. The parametric bad weather insurance is a collaboration with the German start-up Wetterheld. The trigger in this parametric insurance, is hit, if the precipitation at a fixed destination, exceeds a certain amount (in mm) within a time period. While Baloise provides the product, Wetterheld is responsible for the tracking of the parameters. The scope of the insurance provider limits as follows:
+% Kommentar: ergänzen, Wetterheld/Baloise versichert mehrere Risiken. Erwähnen, dass wir nur den Wetterteil anschauen.
 
 \paragraph*{Time restriction}
 To prevent moral hazard, parametric weather insurance cover cannot be bought later than 14 days before the trip starts. The accuracy of weather forecasts has been shown to decrease exponentially, with forecasts beyond two weeks being no more reliable than random guessing. The available duration of a trip covered by bad-weather insurance is 2-92 days.
@@ -115,29 +113,29 @@ The insured has to provide GPS coordinates of his trip destination. Wetterheld t
 The trigger for this parametric insurance is hit, if the precipitation (rainfall, snow, hail etc.) exceeds 2.9mm within one day only considering the time 10 a.m. until 6 p.m.A rain amount of 2.9mm is approximately equivalent to 90 minutes of light rain or 10-15 min of heavy rain \cite{dwd}. 
 
 \paragraph*{Deductible days}
-The bad weather coverage also considers the destination of a trip in terms of the amount of precipitation expected in this area. The probability for a wet trip is not the same when travelling to the United Kingdom as for travelling to Andalusia. Therefore Wetterheld introduced what can be understood as deductible days. For example for a seven days trip to Cardiff the first three days of may not be covered, while on the Sevilla trip only the first one isn't covered due to different expectations. Furthermore, the number of days with significant precipitation varies considerably throughout the calendar year.
+The bad weather coverage also considers the destination of a trip in terms of the amount of precipitation expected in this area. The probability for a wet trip is not the same when travelling to the United Kingdom as for travelling to Andalusia. Therefore Wetterheld introduced what can be understood as deductible days. For example for a seven days trip to Cardiff the first three days may not be covered, while on the Sevilla trip only the first day is not covered due to different expected precipitation frequencies. Furthermore, the number of days with significant precipitation varies considerably throughout the calendar year.
 
 \paragraph*{Pricing}
 Calculating a reasonable risk premium is the most crucial part and remains confidential. No information about the modelling and pricing was available, the only transparent part of a parametric insurance is the pay-out trigger.
 
-\subsection{Implementation of a parametric weather insurance}
-For the project in "Smart Contracts and Decentralized Finance" the product presented above could only be implemented partially. Many aspects were simplified and some were out of the scope of our project. 
+\section{Implementation of a parametric weather insurance on a Smart Contract}
+In this section the implementation of a parametric weather insurance on a Smart Contract is discussed. First a brief summary of Smart Contracts is provided.
+
+\subsection{Basics of Smart Contracts}
+% ChatGPT:  Bitte eine Halbe Seite über Smart Contracts schreiben.
+\subsection{Simplified Implementation of parametric weather insurance}
+For the project in "Smart Contracts and Decentralised Finance" the product presented was partially implemented in a smart contract on the Sepolia-ETH test net. The code was programmed using the programming language Solidity and the development environment used was the REMIX browser IDE. Many aspects were simplified and some were out of the scope of our project. When a topic was considered out of scope, the theoretical solution is outlines as well as the simplified implemented version are specified.
+
 \paragraph*{Time restriction}
-(Via Smart Contract in Sepolia?)
+The time restriction in the implemented smart contract is the same as the time restriction used in the Baloise insurance. The starting and end times are checked using the require function in Solidity. For testing purposes the minimum wait time of 14 days has been removed.
 
 \paragraph*{Geographical scope}
-In this implementation the insured would provide a start and an end date of his trip as well as gps coordinates of his location. The location is then used to get an estimate for the number of days with precipitation larger than 2.9mm (details see below "Deductible days") using R. The geographical scope of the program is Europe (incl. Iceland, Scandinavia and Turkey). The 
+In this implementation the insured would provide a start and an end date of his trip as well as gps coordinates of his location. The location is then used to get an estimate for the number of days with precipitation larger than 2.9mm (details see below "Deductible days") using R. The geographical scope of the program is Europe (incl. Iceland, Scandinavia and Turkey). The % Kommentar: Hier ist der Satz nicht fertig. 
+% Kommentar: entweder die Analyse der Daten einbringen, 
+% Kommentar: oder einfach sagen es war out of scope. 
 
 \paragraph*{Definition of bad weather}
-(Kai) The trigger is set to 2.9mm precipitation within a day in the Smart Contract script.
-
-\begin{figure}[h] % [h] = "here", direkt an dieser Stelle
-    \centering
-    \includegraphics[width=0.5\textwidth]{weather_2025_Sep} % Dateiname des Bildes
-    \caption{example of a triggered parametric weather insurance given that travel occurred between days 252 and 260 with deductible days of less than 4. The data is the of sum of precipitation between the hours of 8 AM and 10 PM per day. The precipitation data is from Berlin in September 2025.}
-    \label{fig:bsp_trigger}
-\end{figure}
-
+Bad weather is defined by 2.9mm precipitation within a time period between 8 AM and 6 PM per day in accordance with the Baloise product.
 
 \paragraph*{Deductible days}
 The calculation which lies behind the number of deductible days from Wetterheld is not transparently available for customers. For this project we had our own approach using five risk categories (A-E) to find the number of deductible days for a certain location. Copernicus Climate Change services is a program by the European Comission that provides historical weather data for drought, flood, temperature, precipitation etc. We used historical precipitation data (1983-2023) which is obtained through satellite imagery for each 0.5° x 0.5° grid cell. Each of the five risk category represents a 20-percent quantile of the annual precipitation amounts. For exmaple if the average annual precipitation in our location is in the 35th percentile of our dataset, its risk category would be "B". The number of deductibles is then determined by the formula:
@@ -150,11 +148,31 @@ where: int\text{ = rounding function}, D_{\text{ded}} \text{ = Deductible Days},
 
 
 \paragraph*{Pricing}
-simple idea, as pricing is out of scope for this project.
-$premium = coverage * (duration - thresholdForRegion) * 1/10 * region * 11/10;$
-(Kai)
+Due to the secrecy around the pricing of the Baloise product, the premium calculation is considered out of scope for this project. In order to test the smart contract a simplified and rudimentary formula is used to obtain a premium dependent on the \textbf{duration} of insured trip, the amount of  \textbf{coverage}, the amount of \textbf{deductible days} and a rudimentary estimation of the \textbf{likelihood of rain in the insured area}.
 
+\[
+\text{premium} = \text{coverage} \ (\text{duration} - \text{thresholdForRegion}) \   \mu_X \  \Phi
+\]
+with $\Phi = \frac{11}{10}$ as safty margin.
+
+\paragraph*{Example Berlin in September 2025}
+
+\begin{figure}[h] % [h] = "here", direkt an dieser Stelle
+    \centering
+    \includegraphics[width=0.5\textwidth]{weather_2025_Sep} % Dateiname des Bildes
+    \caption{example of a triggered parametric weather insurance given that travel occurred between days 252 and 260 with deductible days of less than 4. The data is the of sum of precipitation between the hours of 8 AM and 6 PM per day. The precipitation data is from Berlin in September 2025.}
+    \label{fig:bsp_trigger}
+\end{figure}
+
+
+\newpage
 \subsection{Specifics of the Smart Contract}
+
+\paragraph*{Input Checks}
+\paragraph*{Oracle}
+In a final implementation the daily aggregated 
+
+\paragraph*{Outline of Trigger Function}
 
 \begin{figure}[h] % [h] = "here", direkt an dieser Stelle
     \centering
@@ -162,21 +180,6 @@ $premium = coverage * (duration - thresholdForRegion) * 1/10 * region * 11/10;$
     \caption{flowchart of the triggerfunction}
     \label{fig:flowchart}
 \end{figure}
-
-
-\newpage
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Second chapter of the main part}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{First Section}
-
-\subsection{Second Section}
-
 
 
 \newpage
