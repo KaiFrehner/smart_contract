@@ -14,6 +14,8 @@
 \setlength{\parindent}{0pt} % kein indent bei absätzen
 \setlength{\parskip}{\baselineskip} % abstand zwischen absätzen
 \linespread{0.95} % controls the tightness overall
+\usepackage{hyperref }
+\usepackage{nameref}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,6 +125,14 @@ In this section the implementation of a parametric weather insurance on a Smart 
 
 \subsection{Basics of Smart Contracts}
 % ChatGPT:  Bitte eine Halbe Seite über Smart Contracts schreiben.
+
+A smart contract is a self-executing program stored on a blockchain that automatically enforces and carries out predefined rules once specific conditions are met. Its logic is executed deterministically by all validating nodes in the network, ensuring identical outcomes without relying on intermediaries or trust between contracting parties. Because all state transitions and transactions are recorded on an immutable distributed ledger, smart contracts offer transparency, auditability, and resistance to tampering.
+
+Technically, a smart contract is deployed as bytecode at a dedicated blockchain address and can be invoked through transactions that trigger state changes. The contract used in this study is implemented in Solidity and deployed on the \textit{Sepolia} Ethereum test network, a low-cost proof-of-stake testnet that reproduces the execution environment of the Ethereum mainnet. This allows realistic testing of contract logic—such as fund transfers, threshold evaluations, and automated payouts—without financial exposure.
+
+Smart contracts are frequently used to automate processes in decentralized applications, including parametric insurance. Because blockchains cannot natively access external data, such contracts rely on oracle mechanisms that deliver off-chain information (e.g., weather measurements) to the chain. Once this data is received, the contract evaluates it according to predefined criteria and deterministically executes the corresponding outcome, such as triggering a payout.
+
+
 \subsection{Simplified Implementation of parametric weather insurance}
 For the project in "Smart Contracts and Decentralised Finance" the product presented was partially implemented in a smart contract on the Sepolia-ETH test net. The code was programmed using the programming language Solidity and the development environment used was the REMIX browser IDE. Many aspects were simplified and some were out of the scope of our project. When a topic was considered out of scope, the theoretical solution is outlines as well as the simplified implemented version are specified.
 
@@ -148,12 +158,12 @@ where: int\text{ = rounding function}, D_{\text{ded}} \text{ = Deductible Days},
 
 
 \paragraph*{Pricing}
-Due to the secrecy around the pricing of the Baloise product, the premium calculation is considered out of scope for this project. In order to test the smart contract a simplified and rudimentary formula is used to obtain a premium dependent on the \textbf{duration} of insured trip, the amount of  \textbf{coverage}, the amount of \textbf{deductible days} and a rudimentary estimation of the \textbf{likelihood of rain in the insured area}.
+Due to the secrecy around the pricing of the Baloise product, the premium calculation is considered out of scope for this project. In order to test the smart contract a simplified and rudimentary formula is used to obtain a premium dependent on the \textbf{duration} of insured trip, the amount of  \textbf{coverage}, the amount of \textbf{deductible days} and a rudimentary estimation of the \textbf{likelihood of rain in the insured area}. Additionally, a \textbf{safety margin}  $\Phi = \frac{11}{10}$ is added. 
+
 
 \[
 \text{premium} = \text{coverage} \ (\text{duration} - \text{thresholdForRegion}) \   \mu_X \  \Phi
 \]
-with $\Phi = \frac{11}{10}$ as safty margin.
 
 \paragraph*{Example Berlin in September 2025}
 
@@ -167,12 +177,24 @@ with $\Phi = \frac{11}{10}$ as safty margin.
 
 \newpage
 \subsection{Specifics of the Smart Contract}
+This section describes the implementation of the parametric weather insurance using a smart contract. 
+Some of the features outlined above are simplified, either because they are out of scope for this project or because they proved impractical for testing purposes. 
 
-\paragraph*{Input Checks}
-\paragraph*{Oracle}
+The Basic structure of the smart contract is, that the insurer issues you the contract, and the insured can buy a policy on the smart contract. The information of the policies (i.e. policy holder, region traveled to, amount of deductible days, threshold for bad weather (2.9mm)) is stored within the smart contract. The aggregated weather data for the observed time slot is imported once daily and triggers the function to check with policies are triggered. This function is outlined more closely below.
+
+\paragraph*{Input Checks} 
+As the contract requires user interaction to set up a policy, the inputs need to be checked. This is primarily done with the \texttt{require} function in solidity. This way it is assured that user input is usable and that the premium amount is paid. 
+
+\paragraph*{Events}
+For key events such as state changes in the smart contract events are triggered. These events are then stored in the logs of the smart contract. In this smart contract events are triggered when a new policy is set up, when new weather information is published to the smart contract and which policies are affected by the new weather data point. Finally it is logged when a policy ends and a payment is made.
+
+\paragraph*{Data Import}
+In order to receive external data into the smart contract an oracle is used. A blockchain oracle is an external service that supplies off-chain data—such as weather measurements—to a smart contract, enabling it to react to real-world events that the blockchain cannot observe natively. As noted by Antonopoulos and Wood (2018), oracles are essential for connecting deterministic on-chain logic with unpredictable off-chain information.
+In this implementation the weather data is 
+
 In a final implementation the daily aggregated 
 
-\paragraph*{Outline of Trigger Function}
+\paragraph*{Outline of Trigger Function} \label{sec:trigger}
 
 \begin{figure}[h] % [h] = "here", direkt an dieser Stelle
     \centering
@@ -240,6 +262,18 @@ Meteostat,
 Deutscher Wetterdienst,
 \textit{Wetterlexikon: Niederschlagsintensität},
 \url{https://www.dwd.de/DE/service/lexikon/Functions/glossar.html?lv2=101812&lv3=101906}. Accessed, November 16, 2025.
+
+\bibitem{Szabo1997}
+N. Szabo, ``The Idea of Smart Contracts,'' 1997.
+
+\bibitem{Buterin2014}
+V. Buterin, ``A Next-Generation Smart Contract and Decentralized Application Platform,'' Ethereum Whitepaper, 2014.
+
+\bibitem{Wood2014}
+G. Wood, ``Ethereum: A Secure Decentralised Generalised Transaction Ledger,'' Ethereum Yellow Paper, 2014.
+
+\bibitem{Antonopoulos2018}
+A. M. Antonopoulos and G. Wood, \textit{Mastering Ethereum}, O'Reilly Media, 2018.
 
 \end{thebibliography}
 \endgroup
