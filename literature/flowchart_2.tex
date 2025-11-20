@@ -46,7 +46,7 @@
 
 % --- Nodes ---
 \node (init) [startstop]  {obtain rainfall data \\ for relevant location \\ from Oracle};
-\node (start) [startstop, below of=init] {trigger(\_current\_entry)};
+\node (start) [startstop, below of=init] {trigger(current\_entry)};
 \node (balance) [process, below of=start] {Read contract balance};
 \node (loop) [process, below of=balance] {For each policy};
 
@@ -55,16 +55,16 @@
 \node (nostart) [process, below of = notactive] {Do nothing};
 
 \node (active) [decision, right=2cm of before] {startTime \textless{} Now \textless{} endTime?};
-\node (rain) [decision, right = 2cm of nostart ] {\_current\_entry \textgreater{}  rainfallAmt?};
+\node (rain) [decision, right = 2cm of nostart ] {current\_entry \textgreater{}  rainfallAmt?};
 \node (increment) [process, below =2.5cm of rain] {Increment daysOverThreshold \\ Record affected policy};
 
 \node (expired) [decision, right=3cm of active] {Now \textgreater{} endTime?};
 \node (endmark) [process, below of=expired] {Mark as ended};
 
-\node (qualify) [decision, below of=endmark] {daysOverThreshold \\ \textgreater{}  threshold?};
+\node (qualify) [decision, below of=endmark] {daysOverThreshold \\ \textgreater{}  deductibleDays?};
 \node (payoutcalc) [process, below of=qualify] {Compute payout};
 \node (funds) [decision, below of=payoutcalc] {Enough balance?};
-\node (send) [process, below of=funds] {Attempt payment};
+\node (send) [process, below of=funds] {Payment};
 \node (emitcov1) [process, below of=send] {Emit CoverageTriggered};
 
 \node (emitcov2) [process, left = 0.5cm of send] {Emit CoverageTriggered \\ (no payout)};
