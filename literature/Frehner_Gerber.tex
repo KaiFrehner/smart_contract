@@ -74,7 +74,7 @@ This paper outlines the core principles of parametric insurance and contrasts th
 
 
 \section{Parametric Insurance}
-Thinking about nonlife insurance the intuitive idea is that a predefined risk is covered by an insurance company, which, in occurrence of a loss or damage, would pay out a certain amount to the claimant. This amount would have a direct relation to the insured loss. In the world of nonlife insurance solutions there are far more classes of contracts than this classical kind of indemnity insurance. The figure below is showing the different kinds of indemnity and non-indemnity insurance contracts:
+In the context of non-life insurance, the intuitive idea is that a predefined risk is covered by an insurer who indemnifies the policyholder in the event of a loss. The indemnity payment is directly linked to the actual loss incurred by the insured. However, the landscape of non-life insurance products encompasses a much broader variety of contract types than this classical form of indemnity insurance. Figure 1 illustrates the different categories of indemnity and non-indemnity insurance contracts:
 
 \begin{figure}[h] % [h] = "here", direkt an dieser Stelle
     \centering
@@ -82,7 +82,7 @@ Thinking about nonlife insurance the intuitive idea is that a predefined risk is
     \caption{Classification of nonlife contracts \cite{LinKwon}}
     \label{fig:beispiel}
 \end{figure}
-In the following we will refer to "Pure Parametric Contracts" using the term "Parametric Insurance". This is the class of contracts, were a predefined amount is paid to the insured, if a specific trigger is hit, regardless of the loss amount. Examples for such triggers could be the magnitude of an earthquake, wind speed or the delay of a plane. The following table highlights differences between traditional indemnity insurance and parametric solutions:
+In the following, we refer to "Pure Parametric Contracts" simply as \emph{Parametric Insurance}. This class of contracts provides a predefined payout to the insured once a specific trigger event occurs, irrespective of the actual monetary loss. Typical trigger variables include, for example, earthquake magnitude, wind speed, or flight delay. Table 1 summarises key differences between traditional indemnity insurance and parametric solutions.
 
 \begin{table}[H] 
     \centering
@@ -102,27 +102,29 @@ In the following we will refer to "Pure Parametric Contracts" using the term "Pa
     \label{tab:example}
 \end{table}
 
-Those differences in the structure mentioned in Table 1 makes parametric solutions attractive for different Lines of Businesses such as Agriculture, Nature Catastrophe or Travel Insurance \cite{ParamGuide}. In recent years it is one of the fastest growing areas in the world of insurance solutions expecting to triple in premium income within the 2020s to almost 30 billion USD \cite{SwissReParamIns}. Still a niche product compared to the seven trillion USD insurance premium income worldwide \cite{AllianzReport}. 
+These structural characteristics make parametric solutions particularly attractive for several lines of business, such as agriculture, natural catastrophe insurance, and travel insurance \cite{ParamGuide}. In recent years, parametric insurance has been one of the fastest-growing segments in the insurance market, with premium volumes expected to triple during the 2020s, reaching almost USD~30~billion \cite{SwissReParamIns}. Despite this rapid growth, parametric products remain a niche market compared to the approximately USD~7~trillion in global insurance premiums \cite{AllianzReport}.
+ 
 
 \subsection{Baloise and Wetterheld - A parametric travel insurance}
 
-In 2023  Swiss insurer Baloise achieved second place at the Swiss Insurance Innovation award prize for innovation for its multi-parametric travel insurance solution "Parasurance". With Parasurance customers can decide whether they cover for flight delay, luggage delay, bad weather or a combination of those on their trip. Further, a motor third party liability insurance can be added to the coverage. The parametric bad weather insurance is a collaboration with the German start-up Wetterheld. The trigger in this parametric insurance, is hit, if the precipitation at a fixed destination, exceeds a certain amount (in mm) within a time period. While Baloise provides the product, Wetterheld is responsible for the tracking of the parameters. The scope of the insurance provider limits as follows:
-% Kommentar: ergänzen, Wetterheld/Baloise versichert mehrere Risiken. Erwähnen, dass wir nur den Wetterteil anschauen.
+In 2023, the Swiss insurer Baloise was awarded second place at the Swiss Insurance Innovation Award for its multi-parametric travel insurance solution, \emph{Parasurance}. Parasurance allows policyholders to select coverage for flight delay, luggage delay, adverse weather, or any combination thereof during their trip. Additionally, motor third-party liability insurance can be added. The parametric bad-weather component is offered in collaboration with the German start-up Wetterheld. 
+
+In this parametric coverage, the trigger is activated if the precipitation at a predetermined destination exceeds a specified threshold (in millimeters) within a given time period. While Baloise provides the insurance product, Wetterheld is responsible for monitoring and verifying the relevant parameters. Note that although Parasurance covers multiple risks, this section focuses exclusively on the bad-weather component.
 
 \paragraph*{Time restriction}
-To prevent moral hazard, parametric weather insurance cover cannot be bought later than 14 days before the trip starts. The accuracy of weather forecasts has been shown to decrease exponentially, with forecasts beyond two weeks being no more reliable than random guessing. The available duration of a trip covered by bad-weather insurance is 2-92 days.
+To mitigate moral hazard, parametric weather insurance cannot be purchased later than 14 days prior to the trip's commencement. Forecast accuracy declines sharply beyond two weeks, rendering longer-term forecasts no more reliable than random guessing. The duration of trips eligible for bad-weather coverage ranges from 2 to 92 days.
 
 \paragraph*{Geographical scope}
-The insured has to provide GPS coordinates of his trip destination. Wetterheld then uses publicly accessible weather data from meteostat to verify whether the policyholder is entitled to compensation \cite{meteostat}, checking the precipitation data at the reported coordinates. Change of place due to travelling is not possible in the bad weather insurance. Only trips within Europe can be insured by Wetterheld.
+Policyholders must provide the GPS coordinates of their travel destination. Wetterheld verifies eligibility for compensation using publicly accessible weather data from Meteostat \cite{meteostat}, based on precipitation measurements at the reported coordinates. Coverage is restricted to the specified location; changes of destination during the trip are not permitted. Only trips within Europe are eligible for this insurance.
 
 \paragraph*{Definition of bad weather}
-The trigger for this parametric insurance is hit, if the precipitation (rainfall, snow, hail etc.) exceeds 2.9mm within one day only considering the time 10 a.m. until 6 p.m.A rain amount of 2.9mm is approximately equivalent to 90 minutes of light rain or 10-15 min of heavy rain \cite{dwd}. 
+The coverage is triggered if daily precipitation (including rainfall, snow, or hail) exceeds 2.9\,mm, considering only the period between 10 a.m. and 6 p.m. A precipitation amount of 2.9\,mm corresponds approximately to 90 minutes of light rain or 10–15 minutes of heavy rain \cite{dwd}.
 
 \paragraph*{Deductible days}
-The bad weather coverage also considers the destination of a trip in terms of the amount of precipitation expected in this area. The probability for a wet trip is not the same when travelling to the United Kingdom as for travelling to Andalusia. Therefore Wetterheld introduced what can be understood as deductible days. For example for a seven days trip to Cardiff the first three days may not be covered, while on the Sevilla trip only the first day is not covered due to different expected precipitation frequencies. Furthermore, the number of days with significant precipitation varies considerably throughout the calendar year.
+The coverage also accounts for regional differences in expected precipitation. The likelihood of adverse weather varies, e.g., between the United Kingdom and Andalusia. Wetterheld therefore applies \emph{deductible days}: for a seven-day trip to Cardiff, the first three days may not be covered, whereas for a trip to Sevilla only the first day is excluded. Moreover, the number of days with significant precipitation varies throughout the calendar year.
 
 \paragraph*{Pricing}
-Calculating a reasonable risk premium is the most crucial part and remains confidential. No information about the modelling and pricing was available, the only transparent part of a parametric insurance is the pay-out trigger.
+Determining an appropriate risk premium is the most critical aspect and remains confidential. While specific modelling and pricing details are not publicly available, the pay-out trigger remains fully transparent.
 
 \section{Implementation of a parametric weather insurance on a Smart Contract}
 In this section the implementation of a parametric weather insurance on a Smart Contract is discussed. First a brief summary of Smart Contracts is provided.
@@ -227,6 +229,12 @@ Figure~\ref{fig:flowchart} provides a visual representation of the \texttt{trigg
 
 
 \section{Conclusion}
+Parametric insurance offers fast, transparent, and objective payouts based on measurable trigger events instead of traditional loss adjustment. The prototype developed in this project demonstrates how smart contracts can strengthen these advantages through automated execution, immutable documentation, and deterministic evaluation. The implementation on the Ethereum Sepolia test network shows that even simplified versions of parametric weather insurance can be encoded efficiently, including deductible-day logic, regional risk factors, and automated payout calculation.
+
+However, the reliance on oracles introduces notable risks. Since blockchains cannot access external data directly, smart contracts depend on oracle services to supply accurate weather information. Faulty, delayed, or manipulated data can cause incorrect payouts or unjustified claim denials, making the oracle a potential single point of failure. Oracle infrastructure is also vulnerable to cyberattacks or outages, and it shifts part of the trust from the insurer to the data provider. These risks highlight that while smart contracts reduce operational and counterparty risk, they cannot eliminate dependencies on external information sources.
+
+Mitigation strategies—such as decentralised oracle networks, multi-source data aggregation, or cryptographic verification—offer promising improvements but also add complexity. Despite these challenges, the results of this project show that blockchain-based implementations can significantly increase efficiency, transparency, and speed in parametric insurance. As oracle systems mature and become more robust, parametric products on blockchain have strong potential to scale and deliver reliable, user-centric risk transfer solutions.
+
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
