@@ -1,4 +1,4 @@
-s\documentclass{beamer}
+\documentclass{beamer}
 \usetheme{Copenhagen}
 \usepackage{german}
 \usepackage[ansinew]{inputenc}
@@ -42,13 +42,21 @@ s\documentclass{beamer}
 \section{Themenpunkt 2} 
 \subsection{2.1 Unterpunkt}
 \begin{frame}
-\frametitle{3. Folientitel Hauptteil} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.35]{flow_chart_3}
+    \label{fig:flowchart}
+\end{figure}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{2.2 Unterpunkt}
 \begin{frame}
-\frametitle{4. Folientitel Hauptteil}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.25]{flowchart_2}
+    \label{fig:flowchart}
+\end{figure}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,13 +64,24 @@ s\documentclass{beamer}
 \subsection{3.1 Unterpunkt}
 \begin{frame}
 \frametitle{5. Folientitel Hauptteil} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth, angle = 90]{flowchart_2}
+    \caption{Flowchart of the \texttt{trigger} function}
+    \label{fig:flowchart}
+\end{figure}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{3.2 Unterpunkt}
 \begin{frame}
 \frametitle{6. Folientitel Hauptteil}
-\end{frame}
+\begin{figure}[h] % [h] = "here", direkt an dieser Stelle
+    \centering
+    \includegraphics[width=0.5\textwidth]{weather_2025_Sep} % Dateiname des Bildes
+    \caption{example of a triggered parametric weather insurance}
+    \label{fig:bsp_trigger}
+\end{figure}\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Schlussbetrachtung und Ausblick} 
@@ -74,7 +93,7 @@ s\documentclass{beamer}
 \begin{frame}
 \frametitle{Vielen Dank}
 \begin{center}
-\LARGE{\textcolor{blue}{Vielen Dank für Ihre Aufmerksamkeit!\\[5mm]
+\LARGE{\textcolor{blue}{Vielen Dank fÃ¼r Ihre Aufmerksamkeit!\\[5mm]
 Fragen?}}
 \end{center}
 ~\\[10mm]
