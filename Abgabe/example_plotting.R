@@ -114,7 +114,7 @@ for(m in months_list) {
     ) +
     theme_minimal()
   
-  ggsave(paste0("monthly_sum/weather_", current_year, "_", m, ".png"), p, width = 7, height = 4)
+  #ggsave(paste0("monthly_sum/weather_", current_year, "_", m, ".png"), p, width = 7, height = 4)
   
   p <- ggplot(df, aes(x = day_of_year, y = daily_rain)) +
     geom_line(color = "black") +
@@ -132,8 +132,9 @@ for(m in months_list) {
     theme_minimal(base_size = 14) +
     theme(
     plot.title = element_text(face = "bold"),
-    axis.title = element_text(face = "bold")
+    axis.title = element_text(face = "bold"),
+    legend.position = "none"   # ← removes the legend entirely
     )
   
-  ggsave(paste0("monthly_sum_fixed/weather_", current_year, "_", m, ".png"), p, width = 7, height = 4)
+  ggsave(paste0("monthly_sum_fixed_pres/weather_", current_year, "_", m, ".png"), p, width = 7, height = 4)
 }

@@ -168,7 +168,7 @@
 \begin{column}{0.48\textwidth}
 \centering
 \includegraphics[width=\linewidth,height=0.4\textheight,keepaspectratio]{spain} % Bild Spanien
-\captionof{Spain: low rainfall}
+\captionof{Spain: infrequent rainfall}
 \end{column}
 
 % RIGHT IMAGE
@@ -252,8 +252,29 @@
 \subsection{Implementation with Solidity}
 \begin{frame}
 \frametitle{Implementation with Solidity}
+\begin{itemize}
+    \item Insurer deploys the smart contract and funds it with initial capital.
+    \item Travellers purchase policies directly on-chain.
+    \item Each policy stores the holder, region, timeframe, and rainfall threshold.
+    \item Daily weather data is supplied through an oracle.
+    \item The \texttt{trigger()} function:
+    \begin{itemize}
+        \item updates policies based on new rainfall data,
+        \item tracks bad-weather days,
+        \item emits events for transparency,
+        \item processes payouts once trips have ended.
+    \end{itemize}
+    \item All logic and events remain verifiable on the blockchain.
+\end{itemize}
+\end{frame}
 
-
+\begin{frame}
+\frametitle{Implementation with Solidity}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.35]{flow_chart_3}
+    \label{fig:flowchart}
+\end{figure}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Example case - Trip to Berlin} 
@@ -263,28 +284,31 @@
 \begin{columns}[T,onlytextwidth]
 
 % LEFT COLUMN -------------------------------------------------
-\begin{column}{0.60\textwidth}
+\begin{column}{0.57\textwidth}
 
 \begin{itemize}
-    \item Trip duration: \textbf{12 Jan 2026$-$23 Jan 2026} (12 days)
+    \item Trip duration: \textbf{ 9 Sep 2025$-$17 Sep 2025 } (8 days)
     \item Berlin has on average \textbf{65 rainy days/year} with precipitation $\ge 2.9$ mm
-    \item $\Rightarrow$ Risk category: \textbf{C}
-    \item Deductible days: $\text{round}(12 \times 0.3) = 4$
-    \item Payout is triggered starting from the \textbf{5th rainy day}
-    \item Coverage amount = \textbf{50 EUR/day} (Assumption)
-    \item Premium:  
-    \[
-        50 EUR \times (12 - 4) \times 0.3 \times 1.1
-        = \textbf{132 EUR}
+    \item $\Rightarrow$ Risk category: \textbf{C} \rightarrow $\mu_X = 0.3$
+    \item Deductible days: $\text{round}(8 \times 0.3) = 2$
+    \item Payout is triggered starting from the \textbf{3rd rainy day}
+    \item Coverage amount = \textbf{50 EUR/day}
+    \item Premium:
+     \[
+         \text{EUR 50} \ \cdot \ (8 - 2) \ \cdot \ 0.3 \ \cdot \ 1.1
+        = \textbf{99 EUR}
     \]
+    \item Payout: $ \text{EUR 50} \ \cdot \ (4 - 2) 
+        = \textbf{100 EUR}$
 \end{itemize}
 
 \end{column}
 
 % RIGHT COLUMN ------------------------------------------------
-\begin{column}{0.37\textwidth}
-\centering
-\includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{berlin}
+\begin{column}{0.4\textwidth}
+\includegraphics[width=\linewidth,keepaspectratio]{weather_2025_Sep_pres}
+\vspace{0.5em} % adjust space as needed
+\includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{berlin}
 \end{column}
 
 \end{columns}
