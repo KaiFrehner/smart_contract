@@ -8,7 +8,7 @@ library(ggplot2)
 base_url = "https://archive-api.open-meteo.com/v1/archive"
 params <- list(
   latitude = 52.52,
-  longitude = 13.41,
+  longitude = 13.41, # Berlin
   start_date = "2019-01-01",
   end_date   = "2025-11-08",
   hourly = "precipitation",
@@ -119,15 +119,21 @@ for(m in months_list) {
   p <- ggplot(df, aes(x = day_of_year, y = daily_rain)) +
     geom_line(color = "black") +
     geom_point(aes(color = flag_red_fixed)) +
-    scale_color_manual(values = c("FALSE" = "black", "TRUE" = "red")) +
+    scale_color_manual(
+      name = 'precipitation\nabove threshold',
+      values = c("FALSE" = "black", "TRUE" = "red")) +
     geom_hline(aes(yintercept = mean_val), linetype = "solid") +
     geom_hline(aes(yintercept = 2.9), linetype = "dotted") +
     labs(
-      title = paste("Weather in", m, current_year),
+      title = paste("precipitation in", m, current_year),
       x = "Day of Year",
-      y = "precipitation"
+      y = "precipitation [mm]"
     ) +
-    theme_minimal()
+    theme_minimal(base_size = 14) +
+    theme(
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+    )
   
   ggsave(paste0("monthly_sum_fixed/weather_", current_year, "_", m, ".png"), p, width = 7, height = 4)
 }

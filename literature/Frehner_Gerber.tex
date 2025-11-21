@@ -151,7 +151,7 @@ In this implementation the insured would provide a start and an end date of his 
 Bad weather is defined by 2.9mm precipitation within a time period between 8 AM and 6 PM per day in accordance with the Baloise product.
 
 \paragraph*{Deductible days}
-The methodology underlying the calculation of deductible days provided by Wetterheld is not transparently available to customers. For this project, we developed our own approach, using five risk categories (A–E) to determine the number of deductible days for a given location. We utilized data from the European Climate Assessment & Dataset (ECA&D) project, which provides daily climate records from over 16,000 weather stations, often dating back to the early 20th century \cite{ecad}.  
+The methodology underlying the calculation of deductible days provided by Wetterheld is not transparently available to customers. For this project, we developed our own approach, using five risk categories (A–E) to determine the number of deductible days for a given location. We utilized data from the European Climate Assessment \& Dataset (ECA\&D) project, which provides daily climate records from over 16,000 weather stations, often dating back to the early 20th century \cite{ecad}.  
 To establish the thresholds for our risk categories, we analyzed the annual number of rainy days (defined as days with precipitation equal to or exceeding 2.9 mm) at 1,000 randomly selected weather stations. Using all stations would have resulted in datasets that were too large and beyond the scope of this project. Each of the five risk categories corresponds to a 20-percent quantile of the annual number of rainy days within the sampled dataset (Calculations and Plotting done in R):
 
 \begin{figure}[h]
