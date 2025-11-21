@@ -82,7 +82,7 @@ In the context of non-life insurance, the intuitive idea is that a predefined ri
 \begin{figure}[h] % [h] = "here", direkt an dieser Stelle
     \centering
     \includegraphics[width=0.5\textwidth]{nonlifecontracts} % Dateiname des Bildes
-    \caption{Classification of nonlife contracts \cite{LinKwon}}
+    \caption{Classification of non-life contracts \cite{LinKwon}}
     \label{fig:beispiel}
 \end{figure}
 In the following, we refer to "Pure Parametric Contracts" simply as \emph{Parametric Insurance}. This class of contracts provides a predefined payout to the insured once a specific trigger event occurs, irrespective of the actual monetary loss. Typical trigger variables include, for example, earthquake magnitude, wind speed, or flight delay. Table 1 summarises key differences between traditional indemnity insurance and parametric solutions.
@@ -94,9 +94,9 @@ In the following, we refer to "Pure Parametric Contracts" simply as \emph{Parame
         \toprule
          & \textbf{Traditional insurance }& \textbf{Parametric insurance} \\
         \midrule \hline\hline
-        Recovery & Reimbursement of ajusted loss & Pre-agreed payment structure based on a event parameter (often binary) \\\hline
+        Recovery & Reimbursement of adjusted loss & Pre-agreed payment structure based on a event parameter (often binary) \\\hline
         Trigger & Payment triggered by actual loss or damage & Payment triggered by an event occurrence exceeding the parametric threshold \\\hline
-        Loss assement and payment & Complex and based on loss adjuster assesment & Transparent, predictable, based on a parameter, quick settlement \\\hline
+        Loss assessment and payment & Complex and based on loss adjuster assessment & Transparent, predictable, based on a parameter, quick settlement \\\hline
         Structure & Standard product and contract wordings & Tailored product with high structuring flexibility \\
         \bottomrule
         \hline
@@ -110,7 +110,7 @@ These structural characteristics make parametric solutions particularly attracti
 
 \subsection{Baloise and Wetterheld - A parametric travel insurance}
 
-In 2023, the Swiss insurer Baloise was awarded second place at the Swiss Insurance Innovation Award for its multi-parametric travel insurance solution, \emph{Parasurance}. This new parametric insurance product allows policyholders to select coverage for flight delay, luggage delay, adverse weather, or any combination thereof during their trip. Additionally, motor third-party liability insurance can be added. The parametric bad-weather component is offered in collaboration with the German start-up Wetterheld. In this parametric coverage, the trigger is activated if the precipitation at a predetermined destination exceeds a specified threshold (in millimetres) within a given time period. While Baloise provides the insurance product, Wetterheld is responsible for monitoring and verifying the relevant parameters. Note that although  \emph{Parasurance} covers multiple risks, this section focuses exclusively on the bad-weather component \cite{wetterheld}. %% hier brauchts noch einen übergang... das war doch mal da..?
+In 2023, the Swiss insurer Baloise was awarded second place at the Swiss Insurance Innovation Award for its multi-parametric travel insurance solution, \emph{Parasurance}. This new parametric insurance product allows policyholders to select coverage for flight delay, luggage delay, adverse weather, or any combination thereof during their trip. Additionally, motor third-party liability insurance can be added. The parametric bad-weather component is offered in collaboration with the German start-up Wetterheld. In this parametric coverage, the trigger is activated if the precipitation at a predetermined destination exceeds a specified threshold (in millimetres) within a given time period. While Baloise provides the insurance product, Wetterheld is responsible for monitoring and verifying the relevant parameters. Note that although  \emph{Parasurance} covers multiple risks, this section focuses exclusively on the bad-weather component \cite{wetterheld}. 
 
 \paragraph*{Time restriction}
 To mitigate moral hazard, parametric weather insurance cannot be purchased later than 14 days prior to the trip's commencement. Forecast accuracy declines sharply beyond two weeks, rendering longer-term forecasts no more reliable than random guessing. The duration of trips eligible for bad-weather coverage ranges from 2 to 92 days.
@@ -126,18 +126,17 @@ The coverage also accounts for regional differences in expected precipitation. T
 
 \paragraph*{Pricing}
 Determining an appropriate risk premium is the most critical aspect and remains confidential. While specific modelling and pricing details are not publicly available, the pay-out trigger remains fully transparent.
-
+\newpage
 \section{Implementation of a parametric weather insurance on a Smart Contract}
 In this section the implementation of a parametric weather insurance on a Smart Contract is discussed. First a brief summary of Smart Contracts is provided.
 
 \subsection{Basics of Smart Contracts}
-% ChatGPT:  Bitte eine Halbe Seite über Smart Contracts schreiben.
 
 A smart contract is a self-executing program stored on a blockchain that automatically enforces and carries out predefined rules once specific conditions are met. Its logic is executed deterministically by all validating nodes in the network, ensuring identical outcomes without relying on intermediaries or trust between contracting parties. Because all state transitions and transactions are recorded on an immutable distributed ledger, smart contracts offer transparency, auditability, and resistance to tampering.
 
-Technically, a smart contract is deployed as bytecode at a dedicated blockchain address and can be invoked through transactions that trigger state changes. The contract used in this study is implemented in Solidity and deployed on the \textit{Sepolia} Ethereum test network, a low-cost proof-of-stake testnet that reproduces the execution environment of the Ethereum mainnet. This allows realistic testing of contract logic—such as fund transfers, threshold evaluations, and automated payouts—without financial exposure.
+Technically, a smart contract is deployed as bytecode at a dedicated blockchain address and can be invoked through transactions that trigger state changes. The contract used in this study is implemented in Solidity and deployed on the \textit{Sepolia} Ethereum test network, a low-cost proof-of-stake test net that reproduces the execution environment of the Ethereum mainnet. This allows realistic testing of contract logic—such as fund transfers, threshold evaluations, and automated payouts—without financial exposure.
 
-Smart contracts are frequently used to automate processes in decentralized applications, including parametric insurance. Because blockchains cannot natively access external data, such contracts rely on oracle mechanisms that deliver off-chain information (e.g., weather measurements) to the chain. Once this data is received, the contract evaluates it according to predefined criteria and deterministically executes the corresponding outcome, such as triggering a payout.
+Smart contracts are frequently used to automate processes in decentralised applications, including parametric insurance. Because blockchains cannot natively access external data, such contracts rely on oracle mechanisms that deliver off-chain information (e.g., weather measurements) to the chain. Once this data is received, the contract evaluates it according to predefined criteria and deterministically executes the corresponding outcome, such as triggering a payout.
 
 
 \subsection{Simplified Implementation of parametric weather insurance}
@@ -209,7 +208,7 @@ Due to the proprietary nature of the Baloise product, the exact pricing methodol
 = \text{coverage} \cdot (D_{\text{tot}} - D_{\text{ded}} ) \cdot \mu_X \cdot \Phi
 \]
 
-
+\newpage
 \paragraph*{Example Berlin in September 2025}
 In order to illustrate a parametric weather insurance, we assume a trip to Berlin between 9~September and 17~September~2025 (days 252--260 in Figure~\ref{fig:bsp_trigger}). During this period, precipitation exceeds the threshold of 2.9\,mm on four days. Berlin is assigned to risk category ``B''. Therefore, the number of deductible days is
 
@@ -232,7 +231,6 @@ With the number of bad-weather days $= 4$, the policy would have triggered a pay
 \end{figure}
 
 
-\newpage
 \subsection{Specifics of the Smart Contract}
 
 This section describes the implementation of the parametric weather insurance using a smart contract. Some features outlined above are simplified, either because they fall outside the scope of this project or because they proved impractical for testing purposes.
