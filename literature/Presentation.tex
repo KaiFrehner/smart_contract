@@ -1,4 +1,4 @@
-s\documentclass{beamer}
+\documentclass{beamer}
 \usepackage{fontawesome5}
 \usetheme{Copenhagen}
 \usepackage{german}
@@ -132,7 +132,6 @@ s\documentclass{beamer}
 
 \begin{frame}{Parametric Weather Insurance: Process Flow}
 \tiny % Schrift auf ca. 50%
-
 \centering
 \begin{tikzpicture}[node distance=0.8cm]
 
@@ -224,13 +223,37 @@ s\documentclass{beamer}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pricing} 
 \begin{frame}
-\frametitle{5. Folientitel Hauptteil} 
+\frametitle{Simplified pricing formula} 
+\footnotesize
+\begin{itemize}
+    \item Information on pricing formula is not available from Baloise
+    \item a simplified approach is used
+\end{itemize}
+
+\vspace{0.2cm}
+
+\[
+\text{premium}
+= \text{coverage} \cdot (D_{\text{tot}} - D_{\text{ded}} ) \cdot \mu_X \cdot \Phi
+\]
+\vspace{0.2cm}
+\begin{itemize}
+    \item coverage: amount paid out per bad-weather day
+    \item $D_{\text{tot}}$: Total duration of the trip
+    \item $D_{\text{ded}}$: Deductible days for the specific travel destination
+    \item $\mu_X$: Chance of rain in the specific travel destination
+     \item $\Phi$:  safety margin of 1.1 is included to account for uncertainty
+ \end{itemize}
+
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Implementation with Solidity}
 \begin{frame}
-\frametitle{6. Folientitel Hauptteil}
+\frametitle{Implementation with Solidity}
+
+
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Example case - Trip to Berlin} 
@@ -282,7 +305,7 @@ s\documentclass{beamer}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Thank you}
+\frametitle{Thank you!}
 \begin{center}
 \LARGE{\textcolor{blue}{Thank you for your attention!\\[5mm]
 We're happy to answer any questions}}
@@ -297,7 +320,7 @@ We're happy to answer any questions}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{References}
 \begin{frame}
-\frametitle{Literaturliste}
+\frametitle{List of References}
 \begin{thebibliography}{9}
 \bibitem[ECA&D]{paket}
 \emph{ECA&D}. \text{https://www.ecad.eu/}
