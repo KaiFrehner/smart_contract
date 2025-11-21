@@ -107,7 +107,7 @@ These structural characteristics make parametric solutions particularly attracti
 
 \subsection{Baloise and Wetterheld - A parametric travel insurance}
 
-In 2023, the Swiss insurer Baloise was awarded second place at the Swiss Insurance Innovation Award for its multi-parametric travel insurance solution, \emph{Parasurance}. Parasurance allows policyholders to select coverage for flight delay, luggage delay, adverse weather, or any combination thereof during their trip. Additionally, motor third-party liability insurance can be added. The parametric bad-weather component is offered in collaboration with the German start-up Wetterheld. In this parametric coverage, the trigger is activated if the precipitation at a predetermined destination exceeds a specified threshold (in millimeters) within a given time period. While Baloise provides the insurance product, Wetterheld is responsible for monitoring and verifying the relevant parameters. Note that although Parasurance covers multiple risks, this section focuses exclusively on the bad-weather component \cite{wetterheld}.
+In 2023, the Swiss insurer Baloise was awarded second place at the Swiss Insurance Innovation Award for its multi-parametric travel insurance solution, \emph{Parasurance}. This new parametric insurance product allows policyholders to select coverage for flight delay, luggage delay, adverse weather, or any combination thereof during their trip. Additionally, motor third-party liability insurance can be added. The parametric bad-weather component is offered in collaboration with the German start-up Wetterheld. In this parametric coverage, the trigger is activated if the precipitation at a predetermined destination exceeds a specified threshold (in millimetres) within a given time period. While Baloise provides the insurance product, Wetterheld is responsible for monitoring and verifying the relevant parameters. Note that although  \emph{Parasurance} covers multiple risks, this section focuses exclusively on the bad-weather component \cite{wetterheld}. %% hier brauchts noch einen übergang... das war doch mal da..?
 
 \paragraph*{Time restriction}
 To mitigate moral hazard, parametric weather insurance cannot be purchased later than 14 days prior to the trip's commencement. Forecast accuracy declines sharply beyond two weeks, rendering longer-term forecasts no more reliable than random guessing. The duration of trips eligible for bad-weather coverage ranges from 2 to 92 days.
@@ -181,24 +181,30 @@ D_{\text{ded}} =  \operatorname{round}\!\big(D_{\text{tot}} \cdot \mu_X\big)
 where: $D_{\text{ded}} \text{ = Deductible Days}, D_{\text{tot}} \text{ = Duration of the trip}, 
 \mu_X \text{ = risk factor, with } \mu_A = 0.1, \mu_B = 0.2, \dots, \mu_E = 0.5$
 
+Note that in this initial implementation the monthly change in precipitation for a specific location is not considered.
 
 \paragraph*{Pricing}
 Due to the proprietary nature of the Baloise product, the exact pricing methodology is not publicly disclosed and is therefore considered out of scope for this project. For testing purposes, a simplified and deliberately rudimentary premium formula is employed. This approximation derives the premium from the \textbf{duration} of the insured trip, the level of \textbf{coverage}, the number of \textbf{deductible days}, and a coarse estimate of the \textbf{likelihood of rain in the insured region}. In addition, a \textbf{safety margin} of $\Phi = \tfrac{11}{10}$ is included to account for uncertainty.
 
 \[
 \text{premium}
-= \text{coverage} \times (\text{duration} - \text{thresholdForRegion}) \times \mu_X \times \Phi
+= \text{coverage} \times (D_{\text{tot}} - D_{\text{ded}} ) \times \mu_X \times \Phi
 \]
 
 
 \paragraph*{Example Berlin in September 2025}
 In order to illustrate a parametric weather insurance, we assume a trip to Berlin between 9~September and 17~September~2025 (days 252--260 in Figure~\ref{fig:bsp_trigger}). During this period, precipitation exceeds the threshold of 2.9\,mm on four days. Berlin is assigned to risk category ``B''. Therefore, the number of deductible days is
+
 \[
-D_{\text{ded}} = \operatorname{round}\!\big(8 \cdot 0.2\big) = 2.
+\begin{aligned}
+D_{\text{ded}} &= \operatorname{round}\!\big(8 \cdot 0.2\big) = 2 \\
+\text{number of bad-weather days} &= 4
+\end{aligned}
 \]
+
 Consequently, the policy would have triggered a payout of
 \[
-2 \times \text{coverage}.
+(4 - 2) \times \text{coverage}.
 \]
 
 \begin{figure}[h] % [h] = "here", direkt an dieser Stelle
