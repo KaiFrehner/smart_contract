@@ -4,7 +4,7 @@
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
-\geometry{a4paper,left=35mm,right=35mm,top=4cm,bottom=4cm}
+\geometry{a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm}
 \usepackage{graphicx}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{multirow}
@@ -17,6 +17,9 @@
 \usepackage{hyperref }
 \usepackage{nameref}
 \usepackage{booktabs}
+\usepackage{titlesec}
+\titlespacing*{\paragraph}
+{0pt}{2ex}{1ex} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -145,18 +148,18 @@ The time restrictions implemented in the smart contract mirror those used in the
 
 
 \paragraph*{Geographical scope}
-In this implementation the insured would provide a start and an end date of his trip as well as gps coordinates of his location. The location is then used to calculate the average number of days in a year with a precipitation larger than 2.9mm using R. For each 0.5° x 0.5° grid cell, there is on Copernicus, which is a open source program by the European Comission, for historical weather data for drought, flood, temperature, precipitation etc. available. This might be the source to verify whether the trigger is hit. 
+In this implementation the insured would provide a start and an end date of their trip as well as gps coordinates of their location. The location is then used to calculate the average number of days in a year with a precipitation larger than 2.9mm using R. For each 0.5° x 0.5° grid cell, there is on Copernicus, which is a open source program by the European Comission, for historical weather data for drought, flood, temperature, precipitation etc. available. This might be the source to verify whether the trigger is hit. 
 
 \paragraph*{Definition of bad weather}
 Bad weather is defined by 2.9mm precipitation within a time period between 8 AM and 6 PM per day in accordance with the Baloise product.
 
 \paragraph*{Deductible days}
 The methodology underlying the calculation of deductible days provided by Wetterheld is not transparently available to customers. For this project, we developed our own approach, using five risk categories (A–E) to determine the number of deductible days for a given location. We utilized data from the European Climate Assessment \& Dataset (ECA\&D) project, which provides daily climate records from over 16,000 weather stations, often dating back to the early 20th century \cite{ecad}.  
-To establish the thresholds for our risk categories, we analyzed the annual number of rainy days (defined as days with precipitation equal to or exceeding 2.9 mm) at 1,000 randomly selected weather stations. Using all stations would have resulted in datasets that were too large and beyond the scope of this project. Each of the five risk categories corresponds to a 20-percent quantile of the annual number of rainy days within the sampled dataset (Calculations and Plotting done in R):
+To establish the thresholds for our risk categories, we analyzed the annual number of rainy days (defined as days with precipitation equal to or exceeding 2.9 mm) at 1,000 randomly selected weather stations. Using all stations would have resulted in datasets that were too large and beyond the scope of this project. Each of the five risk categories corresponds to a 20-percent quantile of the annual number of rainy days within the sampled dataset (Calculations and Plotting done using R, see file risk\_category.R):
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{hist}
+    \includegraphics[width=\textwidth]{hist}
     \caption{Quantiles of annual rainy days}
     \label{fig:bsp_trigger}
 \end{figure}
@@ -165,13 +168,28 @@ Our risk categories are therefore defined as follows:
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{c c c c c}
-        A & B & C & D & E \\
-        $<50$ & $50 \le x < 64$ & $64 \le x < 77$ & $77 \le x < 93$ & $93 \le x$ \\
+    \begin{tabular}{|p{2.25cm}|p{2.25cm}|p{2.25cm}|p{2.25cm}|p{2.25cm}|}
+        \hline
+        \toprule
+        \multicolumn{1}{|c|}{\textbf{A}} &
+        \multicolumn{1}{c|}{\textbf{B}} &
+        \multicolumn{1}{c|}{\textbf{C}} &
+        \multicolumn{1}{c|}{\textbf{D}} &
+        \multicolumn{1}{c|}{\textbf{E}} \\
+        \midrule \hline\hline
+        $<50$ 
+        & $50 \le x < 64$ 
+        & $64 \le x < 77$ 
+        & $77 \le x < 93$ 
+        & $93 \le x$ \\
+        \bottomrule
+        \hline
     \end{tabular}
-    \caption{Risk categories based on quantiles of annual rainy days}
+    \caption{Risk categories based on quantiles of number of annual rainy days}
     \label{tab:risk_categories}
 \end{table}
+
+
 
 For instance, if the average annual number of rainy days at a given location is 62, the corresponding risk category would be “B.” The number of deductible days is subsequently determined using the specified formula:
 \[
@@ -184,11 +202,11 @@ where: $D_{\text{ded}} \text{ = Deductible Days}, D_{\text{tot}} \text{ = Durati
 Note that in this initial implementation the monthly change in precipitation for a specific location is not considered.
 
 \paragraph*{Pricing}
-Due to the proprietary nature of the Baloise product, the exact pricing methodology is not publicly disclosed and is therefore considered out of scope for this project. For testing purposes, a simplified and deliberately rudimentary premium formula is employed. This approximation derives the premium from the \textbf{duration} of the insured trip, the level of \textbf{coverage}, the number of \textbf{deductible days}, and a coarse estimate of the \textbf{likelihood of rain in the insured region}. In addition, a \textbf{safety margin} of $\Phi = \tfrac{11}{10}$ is included to account for uncertainty.
+Due to the proprietary nature of the Baloise product, the exact pricing methodology is not publicly disclosed and is therefore considered out of scope for this project. For testing purposes, a simplified and deliberately rudimentary premium formula is employed. This approximation derives the premium from the duration of the insured trip, the level of coverage, the number of deductible days, and a coarse estimate of the likelihood of rain in the insured region. In addition, a safety margin of $\Phi = \tfrac{11}{10}$ is included to account for uncertainty.
 
 \[
 \text{premium}
-= \text{coverage} \times (D_{\text{tot}} - D_{\text{ded}} ) \times \mu_X \times \Phi
+= \text{coverage} \cdot (D_{\text{tot}} - D_{\text{ded}} ) \cdot \mu_X \cdot \Phi
 \]
 
 
@@ -198,21 +216,22 @@ In order to illustrate a parametric weather insurance, we assume a trip to Berli
 \[
 \begin{aligned}
 D_{\text{ded}} &= \operatorname{round}\!\big(8 \cdot 0.2\big) = 2 \\
-\text{number of bad-weather days} &= 4
 \end{aligned}
 \]
 
-Consequently, the policy would have triggered a payout of
+With the number of bad-weather days $= 4$, the policy would have triggered a payout of
 \[
-(4 - 2) \times \text{coverage}.
+(4 - 2) \cdot \text{coverage}.
 \]
 
 \begin{figure}[h] % [h] = "here", direkt an dieser Stelle
     \centering
-    \includegraphics[width=0.5\textwidth]{weather_2025_Sep} % Dateiname des Bildes
-    \caption{example of a triggered parametric weather insurance}
+    \includegraphics[width=0.9\textwidth]{weather_2025_Sep} % Dateiname des Bildes
+    \caption{example of a triggered parametric weather insurance \\ (Calculations and Plotting done using R, see file example\_plotting.R):}
     \label{fig:bsp_trigger}
 \end{figure}
+
+
 \newpage
 \subsection{Specifics of the Smart Contract}
 
@@ -242,7 +261,7 @@ Figure~\ref{fig:flowchart} provides a visual representation of the \texttt{trigg
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{flowchart_2}
+    \includegraphics[width=0.9\textwidth]{flow_chart_3}
     \caption{Flowchart of the \texttt{trigger} function}
     \label{fig:flowchart}
 \end{figure}
@@ -258,14 +277,6 @@ Parametric insurance offers fast, transparent, and objective payouts based on me
 However, the reliance on oracles introduces notable risks. Since blockchains cannot access external data directly, smart contracts depend on oracle services to supply accurate weather information. Faulty, delayed, or manipulated data can cause incorrect payouts or unjustified claim denials, making the oracle a potential single point of failure. Oracle infrastructure is also vulnerable to cyberattacks or outages, and it shifts part of the trust from the insurer to the data provider. These risks highlight that while smart contracts reduce operational and counterparty risk, they cannot eliminate dependencies on external information sources.
 
 Mitigation strategies—such as decentralised oracle networks, multi-source data aggregation, or cryptographic verification—offer promising improvements but also add complexity. Despite these challenges, the results of this project show that blockchain-based implementations can significantly increase efficiency, transparency, and speed in parametric insurance. As oracle systems mature and become more robust, parametric products on blockchain have strong potential to scale and deliver reliable, user-centric risk transfer solutions.
-
-\newpage
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section*{Appendix}
-\addcontentsline{toc}{section}{Appendix}
 
 \newpage
 
@@ -329,16 +340,16 @@ ECAD,
 
 
 \bibitem{Szabo1997}
-N. Szabo, ``The Idea of Smart Contracts,'' 1997.
+N. Szabo, \textit{The Idea of Smart Contracts}, 1997. \url{https://nakamotoinstitute.org/library/the-idea-of-smart-contracts/}. Accessed, November 13, 2025.
 
 \bibitem{Buterin2014}
-V. Buterin, ``A Next-Generation Smart Contract and Decentralized Application Platform,'' Ethereum Whitepaper, 2014.
+V. Buterin, \textit{A Next-Generation Smart Contract and Decentralized Application Platform}, Ethereum Whitepaper, 2014. \url{https://ethereum.org/whitepaper/}. Accessed, November 6, 2025.
 
 \bibitem{Wood2014}
-G. Wood, ``Ethereum: A Secure Decentralised Generalised Transaction Ledger,'' Ethereum Yellow Paper, 2014.
+G. Wood, \textit{Ethereum: A Secure Decentralised Generalised Transaction Ledger}, Ethereum Yellow Paper, 2014. \url{https://cryptodeep.ru/doc/paper.pdf}. Accessed, November 8, 2025.
 
 \bibitem{Antonopoulos2018}
-A. M. Antonopoulos and G. Wood, \textit{Mastering Ethereum}, O'Reilly Media, 2018.
+A. M. Antonopoulos and G. Wood, \textit{Mastering Ethereum}, O'Reilly Media, 2018. \url{https://github.com/ethereumbook/ethereumbook}. Accessed, November 8, 2025.
 
 \end{thebibliography}
 \endgroup
