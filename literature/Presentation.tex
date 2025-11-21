@@ -100,7 +100,7 @@ s\documentclass{beamer}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Wetterheld - Bad weather Insurance}
 \begin{frame}{Parasurance: Parametric Bad-Weather Coverage}
-\scriptsize % ca. 75% Schriftgröße
+\scriptsize % ca. 75% SchriftgrÃ¶ÃŸe
 
 \begin{columns}[T,onlytextwidth]
 
@@ -162,7 +162,7 @@ s\documentclass{beamer}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Incorporating local weather conditions}
 \begin{frame}{Deductible Days: Methodology}
-\footnotesize % etwas kleinere Schrift für mehr Übersicht
+\footnotesize % etwas kleinere Schrift fÃ¼r mehr Ãœbersicht
 
 \begin{columns}[T,onlytextwidth]
 % LEFT IMAGE
@@ -189,7 +189,6 @@ s\documentclass{beamer}
 \end{itemize}
 
 \end{frame}
-
 \begin{frame}{Deriving the Five Risk Categories (Using R)}
 \footnotesize
 
@@ -208,21 +207,20 @@ s\documentclass{beamer}
 % HISTOGRAM ---------------------------------
 \begin{column}{0.48\textwidth}
 \centering
-\includegraphics[width=\linewidth,height=0.35\textheight,keepaspectratio]{histogram_sampled_stations.jpg}
+\includegraphics[width=\linewidth,height=0.35\textheight,keepaspectratio]{hist}
 
 \end{column}
 
 % MAP WITH STATIONS -------------------------
 \begin{column}{0.48\textwidth}
 \centering
-\includegraphics[width=\linewidth,height=0.35\textheight,keepaspectratio]{station_map.jpg}
+\includegraphics[width=\linewidth,height=0.35\textheight,keepaspectratio]{weatherstations}
 
 \end{column}
 
 \end{columns}
 
 \end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pricing} 
 \begin{frame}
@@ -236,18 +234,55 @@ s\documentclass{beamer}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Example case - Trip to Berlin} 
-\begin{frame}
-\frametitle{Schlussbetrachtung und Ausblick} 
+\begin{frame}{Example: Trip to Berlin}
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+% LEFT COLUMN -------------------------------------------------
+\begin{column}{0.60\textwidth}
+
+\begin{itemize}
+    \item Trip duration: \textbf{12 Jan 2026$-$23 Jan 2026} (12 days)
+    \item Berlin has on average \textbf{65 rainy days/year} with precipitation $\ge 2.9$ mm
+    \item $\Rightarrow$ Risk category: \textbf{C}
+    \item Deductible days: $\text{round}(12 \times 0.3) = 4$
+    \item Payout is triggered starting from the \textbf{5th rainy day}
+    \item Coverage amount = \textbf{50 EUR/day} (Assumption)
+    \item Premium:  
+    \[
+        50 EUR \times (12 - 4) \times 0.3 \times 1.1
+        = \textbf{132 EUR}
+    \]
+\end{itemize}
+
+\end{column}
+
+% RIGHT COLUMN ------------------------------------------------
+\begin{column}{0.37\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{berlin}
+\end{column}
+
+\end{columns}
+
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Discussion and Conclusion} 
-\begin{frame}
-\frametitle{Schlussbetrachtung und Ausblick} 
+\section{Conclusion} 
+\begin{frame}{Key Findings: Blockchain-based Parametric Insurance}
+\begin{itemize}
+    \item Parametric insurance enables fast, transparent, and objective payouts.
+    \item Smart contracts enhance efficiency, immutability, and automated evaluation.
+    \item Ethereum Sepolia prototype demonstrates feasibility with deductible logic, regional risk factors, and automatic payouts.
+    \item Reliance on oracles introduces risks: faulty, delayed, or manipulated data can affect payouts.
+    \item Oracle risks can be mitigated via decentralized network and multi-source aggregation
+    \item Overall: blockchain-based parametric insurance can increase transparency, speed, and scalability as oracle systems mature.
+\end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Vielen Dank}
+\frametitle{Thank you}
 \begin{center}
 \LARGE{\textcolor{blue}{Thank you for your attention!\\[5mm]
 We're happy to answer any questions}}
