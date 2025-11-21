@@ -107,9 +107,7 @@ These structural characteristics make parametric solutions particularly attracti
 
 \subsection{Baloise and Wetterheld - A parametric travel insurance}
 
-In 2023, the Swiss insurer Baloise was awarded second place at the Swiss Insurance Innovation Award for its multi-parametric travel insurance solution, \emph{Parasurance}. Parasurance allows policyholders to select coverage for flight delay, luggage delay, adverse weather, or any combination thereof during their trip. Additionally, motor third-party liability insurance can be added. The parametric bad-weather component is offered in collaboration with the German start-up Wetterheld. 
-
-In this parametric coverage, the trigger is activated if the precipitation at a predetermined destination exceeds a specified threshold (in millimeters) within a given time period. While Baloise provides the insurance product, Wetterheld is responsible for monitoring and verifying the relevant parameters. Note that although Parasurance covers multiple risks, this section focuses exclusively on the bad-weather component.
+In 2023, the Swiss insurer Baloise was awarded second place at the Swiss Insurance Innovation Award for its multi-parametric travel insurance solution, \emph{Parasurance}. Parasurance allows policyholders to select coverage for flight delay, luggage delay, adverse weather, or any combination thereof during their trip. Additionally, motor third-party liability insurance can be added. The parametric bad-weather component is offered in collaboration with the German start-up Wetterheld. In this parametric coverage, the trigger is activated if the precipitation at a predetermined destination exceeds a specified threshold (in millimeters) within a given time period. While Baloise provides the insurance product, Wetterheld is responsible for monitoring and verifying the relevant parameters. Note that although Parasurance covers multiple risks, this section focuses exclusively on the bad-weather component \cite{wetterheld}.
 
 \paragraph*{Time restriction}
 To mitigate moral hazard, parametric weather insurance cannot be purchased later than 14 days prior to the trip's commencement. Forecast accuracy declines sharply beyond two weeks, rendering longer-term forecasts no more reliable than random guessing. The duration of trips eligible for bad-weather coverage ranges from 2 to 92 days.
@@ -147,15 +145,35 @@ The time restrictions implemented in the smart contract mirror those used in the
 
 
 \paragraph*{Geographical scope}
-In this implementation the insured would provide a start and an end date of his trip as well as gps coordinates of his location. The location is then used to get an estimate for the number of days with precipitation larger than 2.9mm (details see below "Deductible days") using R. The geographical scope of the program is Europe (incl. Iceland, Scandinavia and Turkey). The % Kommentar: Hier ist der Satz nicht fertig. 
-% Kommentar: entweder die Analyse der Daten einbringen, 
-% Kommentar: oder einfach sagen es war out of scope. 
+In this implementation the insured would provide a start and an end date of his trip as well as gps coordinates of his location. The location is then used to calculate the average number of days in a year with a precipitation larger than 2.9mm using R. For each 0.5° x 0.5° grid cell, there is on Copernicus, which is a open source program by the European Comission, for historical weather data for drought, flood, temperature, precipitation etc. available. This might be the source to verify whether the trigger is hit. 
 
 \paragraph*{Definition of bad weather}
 Bad weather is defined by 2.9mm precipitation within a time period between 8 AM and 6 PM per day in accordance with the Baloise product.
 
 \paragraph*{Deductible days}
-The calculation which lies behind the number of deductible days from Wetterheld is not transparently available for customers. For this project we had our own approach using five risk categories (A-E) to find the number of deductible days for a certain location. Copernicus Climate Change services is a program by the European Comission that provides historical weather data for drought, flood, temperature, precipitation etc. We used historical precipitation data (1983-2023) which is obtained through satellite imagery for each 0.5° x 0.5° grid cell. Each of the five risk category represents a 20-percent quantile of the annual precipitation amounts. For exmaple if the average annual precipitation in our location is in the 35th percentile of our dataset, its risk category would be "B". The number of deductibles is then determined by the formula:
+The methodology underlying the calculation of deductible days provided by Wetterheld is not transparently available to customers. For this project, we developed our own approach, using five risk categories (A–E) to determine the number of deductible days for a given location. We utilized data from the European Climate Assessment & Dataset (ECA&D) project, which provides daily climate records from over 16,000 weather stations, often dating back to the early 20th century \cite{ecad}.  
+To establish the thresholds for our risk categories, we analyzed the annual number of rainy days (defined as days with precipitation equal to or exceeding 2.9 mm) at 1,000 randomly selected weather stations. Using all stations would have resulted in datasets that were too large and beyond the scope of this project. Each of the five risk categories corresponds to a 20-percent quantile of the annual number of rainy days within the sampled dataset (Calculations and Plotting done in R):
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{hist}
+    \caption{Quantiles of annual rainy days}
+    \label{fig:bsp_trigger}
+\end{figure}
+
+Our risk categories are therefore defined as follows:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c c c c c}
+        A & B & C & D & E \\
+        $<50$ & $50 \le x < 64$ & $64 \le x < 77$ & $77 \le x < 93$ & $93 \le x$ \\
+    \end{tabular}
+    \caption{Risk categories based on quantiles of annual rainy days}
+    \label{tab:risk_categories}
+\end{table}
+
+For instance, if the average annual number of rainy days at a given location is 62, the corresponding risk category would be “B.” The number of deductible days is subsequently determined using the specified formula:
 \[
 D_{\text{ded}} =  \operatorname{round}\!\big(D_{\text{tot}} \cdot \mu_X\big)
 \]
@@ -277,6 +295,12 @@ Allianz,
 \textit{Allianz Global Insurance Report 2025: Rising demand for protection},
 \url{https://www.allianz.com/en/economic_research/insights/publications/specials_fmo/250527-global-insurance-report.html}. Accessed, November 8, 2025.
 
+
+\bibitem{wetterheld}
+Wetterheld,
+\textit{Wetterheld Website},
+\url{https://wetterheld.com/home/de/}. Accessed, November 11, 2025.
+
 \bibitem{meteostat}
 Meteostat,
 \textit{Meteostat webiste},
@@ -286,6 +310,17 @@ Meteostat,
 Deutscher Wetterdienst,
 \textit{Wetterlexikon: Niederschlagsintensität},
 \url{https://www.dwd.de/DE/service/lexikon/Functions/glossar.html?lv2=101812&lv3=101906}. Accessed, November 16, 2025.
+
+\bibitem{copernicus}
+Copernicus,
+\textit{European Earth observation program},
+\url{https://www.copernicus.eu/en}. Accessed, November 20, 2025.
+
+\bibitem{ecad}
+ECAD,
+\textit{European Climate Assessment and Dataset},
+\url{https://www.ecad.eu/dailydata/index.php}. Accessed, November 20, 2025.
+
 
 \bibitem{Szabo1997}
 N. Szabo, ``The Idea of Smart Contracts,'' 1997.
